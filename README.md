@@ -1,9 +1,9 @@
 
-# VideoCaptioner - Free YouTube Timestamp & Chapter Generator
+# VideoCC - Free YouTube Timestamp & Chapter Generator
 
 **Live Webpage**: [**videocaptioncreator.pages.dev**](https://www.google.com/search?q=https://videocaptioncreator.pages.dev "null")
 
-Welcome to **VideoCaptioner**, a powerful, single-page web application designed to make creating timestamps, chapters, and subtitles for YouTube videos effortless. Built with a sleek, modern interface, it provides content creators, students, and researchers with the tools they need to quickly annotate and navigate video content without leaving the browser.
+Welcome to **VideoCC**, a powerful, single-page web application designed to make creating timestamps, chapters, and subtitles for YouTube videos effortless. Built with a sleek, modern interface, it provides content creators, students, and researchers with the tools they need to quickly annotate and navigate video content without leaving the browser.
 
 ## ✨ Core Features
 
