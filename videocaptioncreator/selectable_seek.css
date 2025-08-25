@@ -1,7 +1,0 @@
-.seek-control-btn.selected {
-    background-image: linear-gradient(to right, var(--highlight-accent), #dcc57d);
-    color: var(--primary-bg);
-    font-weight: bold;
-    box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
-    transform: translateY(-2px);
-}
