@@ -145,10 +145,13 @@
                 <input type="hidden" name="subject" value="New Feedback from VideoCC">
                 <input type="hidden" name="from_name" value="VideoCC Feedback Form">
 
-                <textarea name="message" placeholder="Your message..." rows="6" required></textarea>
+                <textarea name="message" id="feedback-message" placeholder="Your message..." rows="6" required></textarea>
 
                 <!-- <label for="attachment-input">Attach images or video (optional, max 10MB):</label>
                 <input type="file" id="attachment-input" name="attachment" multiple> -->
+                <label for="attachment-input">Attach File (optional, max 100MB):</label>
+                <input type="file" id="attachment-input" name="attachment">
+                <div id="upload-status" style="margin-top: 8px; font-size: 0.9em;"></div>
 
                 <button type="submit" id="feedback-submit-btn">Send Feedback</button>
                 <div id="feedback-status"></div>

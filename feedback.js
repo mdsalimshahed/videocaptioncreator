@@ -1,11 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Element Selections ---
     const modal = document.getElementById('feedback-modal');
     const openBtn = document.getElementById('feedback-btn');
     const closeBtn = document.querySelector('.modal-close-btn');
     const form = document.getElementById('feedback-form');
     const statusDiv = document.getElementById('feedback-status');
     const submitBtn = document.getElementById('feedback-submit-btn');
+    
+    // Elements for the file upload functionality
+    const attachmentInput = document.getElementById('attachment-input');
+    const uploadStatusDiv = document.getElementById('upload-status');
+    const messageTextarea = document.getElementById('feedback-message'); 
 
+    // --- Modal Handling ---
     const openModal = () => {
         modal.style.display = 'block';
     };
@@ -13,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = () => {
         modal.style.display = 'none';
         statusDiv.textContent = '';
+        if(uploadStatusDiv) {
+           uploadStatusDiv.textContent = ''; 
+        }
         form.reset();
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send Feedback';
@@ -27,6 +37,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- File Upload Handler (via Python Backend) ---
+    if (attachmentInput) {
+        attachmentInput.addEventListener('change', async () => {
+            if (attachmentInput.files.length === 0) {
+                return;
+            }
+
+            const file = attachmentInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            uploadStatusDiv.textContent = 'Uploading file...';
+            uploadStatusDiv.style.color = 'inherit';
+
+            try {
+                // =================================================================
+                // IMPORTANT: REPLACE THIS URL WITH YOUR LIVE RENDER BACKEND URL
+                const backendUrl = 'https://your-render-backend-url.onrender.com/upload'; 
+                // =================================================================
+
+                const response = await fetch(backendUrl, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    const fileLink = result.link;
+                    messageTextarea.value += `\n\nAttachment: ${fileLink}`;
+                    uploadStatusDiv.textContent = '✅ File uploaded and link added!';
+                    uploadStatusDiv.style.color = 'var(--secondary-accent)';
+                } else {
+                    console.error('API Error:', result.error);
+                    uploadStatusDiv.textContent = '❌ File upload failed. Please try again.';
+                    uploadStatusDiv.style.color = 'var(--danger-color)';
+                }
+            } catch (error) {
+                console.error('Upload network error:', error);
+                uploadStatusDiv.textContent = '❌ Could not connect to the upload server.';
+                uploadStatusDiv.style.color = 'var(--danger-color)';
+            }
+        });
+    }
+
+
+    // --- Main Form Submission Handler (to Web3Forms) ---
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
