@@ -1,0 +1,93 @@
+/* This file contains styles exclusively for the mobile layout redesign. */
+
+/* Apply the new mobile layout on screens 950px or smaller */
+@media (max-width: 800px) {
+    #original-content {
+        padding-top: 95px; /* Match desktop top padding */
+    }
+
+    /* LANDING PAGE FIXES */
+    #landing-container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #video-input-section {
+        flex-direction: column; /* Stack input and button */
+        gap: 10px;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
+    #video-input-section .input-wrapper {
+        background-color: var(--primary-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+    }
+
+    #load-video-btn {
+        border-radius: 8px; /* Restore border radius */
+        border-left: none;
+    }
+
+    /* MAIN WORKSPACE LAYOUT */
+    #workspace {
+        flex-direction: column;
+        gap: 10px; /* Add some space between video and notes */
+    }
+
+    .left-column {
+        height: auto; 
+        min-height: 370px;
+        order: 1;
+    }
+    
+    .right-column {
+        height: 50vh; /* Give notes panel a fixed height */
+        min-height: 350px;
+        max-height: 50vh;
+        order: 2;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .right-column #bookmarks-list {
+        flex-grow: 1;
+        overflow-y: auto;
+        min-height: 0;
+    }
+
+    /* Smaller timestamp viewer */
+    #timestamp-viewer {
+        padding: 5px;
+        margin-top: 10px;
+    }
+    #current-time-display {
+        font-size: 1.5em;
+    }
+
+    /* Adaptive button sizes */
+    .seek-control-btn, .speed-btn {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+    #playback-controls, #speed-controls {
+        gap: 10px;
+    }
+
+    /* Adaptive buttons in the bookmark/subtitle panel */
+    #add-bookmark-btn, #add-subtitle-btn {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    #subtitle-controls, #undo-redo-controls {
+        gap: 8px;
+    }
+
+    #set-start-btn, #set-end-btn, #undo-btn, #redo-btn {
+        padding: 8px;
+        font-size: 12px;
+    }
+}

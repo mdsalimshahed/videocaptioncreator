@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoCC - Free YouTube Chapters & Captions Generator</title>
+    <meta name="description" content="VideoCC is a free online tool that makes it easy to create timestamps and chapters for any YouTube video. Quickly bookmark important moments, take notes, and generate a perfectly formatted chapter list for your video description. Ideal for content creators, students, and anyone who needs to annotate and navigate long videos.">
+    <meta name="keywords" content="video captioner, video caption creator, vidoecc, vcc, youtube caption generator, youtube timestamp tool, youtube chapter generator, create youtube chapters, youtube video bookmarker, timestamp notes for youtube, youtube vod chapters, livestream timestamp tool, video annotation tool, youtube description formatter, generate video timestamps, free youtube tool, online youtube chapter maker, video timestamp notes, youtube chapter tool">
+    <link rel="icon" href="logo/your-logo-filename.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resizer.css">
+    <link rel="stylesheet" href="selectable_seek.css">
+    <link rel="stylesheet" href="mobile_ux.css">
+    <link rel="stylesheet" href="slider_controls.css">
+    <link rel="stylesheet" href="autofill_toggle.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7990160105322809" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-7990160105322809">
+</head>
+<body>
+    
+    <div id="original-content">
+        <header class="site-header">
+            <div class="logo-container">
+                <img src="logo/your-logo-filename.png" alt="VideoCaptioner Logo" class="header-logo">
+                <h1 id="logo" class="animating">VideoCC</h1>
+            </div>
+
+            <button id="feedback-btn">Leave a Feedback</button>
+
+        </header>
+
+        <div id="landing-page">
+            <p id="tagline">The Ultimate Free Captioning & Chapter Making Tool for YouTube Videos</p>
+            
+            <div class="container" id="landing-container">
+                <h2>Let's Get Started</h2>
+                <div id="video-input-section">
+                    <div class="input-wrapper">
+                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
+                        <input type="text" id="video-url" placeholder="Paste any YouTube video link here...">
+                    </div>
+                    <button id="load-video-btn">Load Video</button>
+                </div>
+            </div>
+
+            <div class="features-grid">
+            </div>
+        </div>
+        
+        <main id="main-content" class="hidden">
+            <button id="start-over-btn">Start Over</button>
+            <div id="workspace">
+                <div class="left-column">
+                    <div id="speed-controls">
+                        <button class="speed-btn" data-speed="0.5">0.5x</button>
+                        <button class="speed-btn active" data-speed="1">1x</button>
+                        <button class="speed-btn" data-speed="1.5">1.5x</button>
+                        <button class="speed-btn" data-speed="2">2x</button>
+                    </div>
+                    <div id="playback-controls">
+                        <button class="seek-control-btn" data-seek="-30">-30s</button>
+                        <button class="seek-control-btn" data-seek="-5">-5s</button>
+                        <button class="seek-control-btn" data-seek="-2">-2s</button>
+                        <button class="seek-control-btn" data-seek="2">+2s</button>
+                        <button class="seek-control-btn" data-seek="5">+5s</button>
+                        <button class="seek-control-btn" data-seek="30">+30s</button>
+                    </div>
+                    
+                    <div id="player-container">
+                        <div id="player"></div>
+                    </div>
+                    <div id="timestamp-viewer">
+                        <span id="current-time-display">0:00</span>
+                    </div>
+                </div>
+                
+                <div id="resizer"></div>
+
+                <div class="right-column">
+                    <div id="bookmarks-header">
+                        <div class="bookmarks-title-container">
+                            <h2 id="bookmarks-title">Bookmark <span class="dropdown-arrow">▼</span></h2>
+                                        
+                            <div class="bookmarks-dropdown">
+                                <a href="#" data-panel="1">Bookmark</a>
+                                <a href="#" data-panel="2">Subtitle</a>
+                            </div>
+                        </div>
+                        <div class="autofill-toggle-container">
+                            <label for="global-autofill-toggle" class="toggle-label">Global Autofill</label>
+                            <div class="toggle-btn" id="autofill-toggle-btn">
+                                <input type="checkbox" id="global-autofill-toggle" class="cb-value" />
+                                <span class="round-btn"></span>
+                            </div>
+                        </div>
+                        
+                        <div id="bookmark-panel-controls">
+                             <button id="add-bookmark-btn">Add a bookmark</button>
+                        </div>
+                        <div id="subtitle-panel-controls" class="hidden">
+                            <div id="subtitle-controls">
+                                <button id="set-start-btn">Start</button>
+                                <button id="set-end-btn">End</button>
+                            </div>
+                             <button id="add-subtitle-btn">Add a subtitle</button>
+                        </div>
+                        <div id="undo-redo-controls">
+                            <button id="undo-btn">Undo</button>
+                            <button id="redo-btn">Redo</button>
+                        </div>
+                    </div>
+                    <div id="bookmarks-list">
+                    </div>
+                </div>
+            </div>
+
+            <div id="output-section" class="container">
+                <h2 id="output-title">Generate Description</h2>
+                <p id="output-description">Click to format your bookmarks to create chapters.</p>
+                <div id="output-controls">
+                    <button id="generate-desc-btn">Generate</button>
+                    <button id="copy-desc-btn" class="hidden">Copy</button>
+                    <div id="save-as-btn-container" class="hidden">
+                        <button id="save-as-btn">Save As</button>
+                        <div class="save-as-dropdown" id="save-as-dropdown">
+                        </div>
+                    </div>
+                </div>
+                <textarea id="youtube-output" class="hidden" placeholder="Your formatted bookmarks will appear here..."></textarea>
+            </div>
+        </main>
+    </div>
+    <div id="feedback-modal" class="modal-hidden">
+        <div class="modal-content">
+            <span class="modal-close-btn">&times;</span>
+            <h2>Feedback & Support</h2>
+            <p>Report a bug, request a feature, or leave a comment.</p>
+            <form id="feedback-form">
+                <input type="hidden" name="access_key" value="4241c2a2-e7e3-484c-8c90-5d4444b6d20c">
+                <input type="hidden" name="subject" value="New Feedback from VideoCC">
+                <input type="hidden" name="from_name" value="VideoCC Feedback Form">
+
+                <textarea name="message" placeholder="Your message..." rows="6" required></textarea>
+
+                <label for="attachment-input">Attach images or video (optional, max 10MB):</label>
+                <input type="file" id="attachment-input" name="attachment" multiple>
+
+                <button type="submit" id="feedback-submit-btn">Send Feedback</button>
+                <div id="feedback-status"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="feature_cards.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="ui.js"></script>
+    <script src="state.js"></script>
+    <script src="player.js"></script>
+    <script src="bookmarks.js"></script>
+    <script src="output.js"></script>
+    <script src="text_undo_redo.js"></script>
+    <script src="app.js"></script>
+    <script src="selectable_seek.js"></script>
+    <script src="slider_controls.js"></script>
+    <script src="autofill_toggle.js"></script>
+    <script src="resizer.js"></script>
+    <script src="player_hotkeys.js"></script>
+
+
+    <div id="feedback-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close-btn">&times;</span>
+            <h2>Feedback & Support</h2>
+            <p>Report a bug, request a feature, or leave a comment.</p>
+            <form id="feedback-form">
+                <input type="hidden" name="access_key" value="80f113cc-dcba-46b4-81ea-87ab6451c60e">
+                <input type="hidden" name="subject" value="New Feedback from VideoCC">
+                <input type="hidden" name="from_name" value="VideoCC Feedback Form">
+
+                <textarea name="message" placeholder="Your message..." rows="6" required></textarea>
+
+                <label for="attachment-input">Attach images or video (optional, max 10MB):</label>
+                <input type="file" id="attachment-input" name="attachment" multiple>
+
+                <button type="submit" id="feedback-submit-btn">Send Feedback</button>
+                <div id="feedback-status"></div>
+            </form>
+        </div>
+    </div>
+    <script src="feedback.js"></script>
+</body>
+</html>
