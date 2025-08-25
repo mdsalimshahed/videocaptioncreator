@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 // =================================================================
                 // IMPORTANT: REPLACE THIS URL WITH YOUR LIVE RENDER BACKEND URL
-                const backendUrl = 'https://your-render-backend-url.onrender.com/upload'; 
+                const backendUrl = 'https://videocaptioncreator-feedback-api.onrender.com/upload'; 
                 // =================================================================
 
                 const response = await fetch(backendUrl, {
