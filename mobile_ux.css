@@ -79,7 +79,7 @@
     /* Adaptive buttons in the bookmark/subtitle panel */
     #add-bookmark-btn, #add-subtitle-btn {
         padding: 10px;
-        font-size: 14px;
+        font-size: 13px;
     }
 
     #subtitle-controls, #undo-redo-controls {

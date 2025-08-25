@@ -5,6 +5,12 @@ const featureData = [
         text: 'Click and drag the central bar to adjust the width of the video and notes panels to your liking.' 
     },
     { 
+        icon: '<img src="https://uxwing.com/wp-content/themes/uxwing/download/internet-network-technology/internet-browsing-icon.svg" alt="Global Autofill Icon">', 
+        title: 'Global Autofill', 
+        text: 'Enable the toggle to get suggestions from notes you\'ve written for every past video that you worked on.' 
+
+    },
+    { 
         icon: '<img src="https://uxwing.com/wp-content/themes/uxwing/download/video-photography-multimedia/video-closed-caption-subtitles-icon.svg" alt="Toggle Icon">', 
         title: 'Dual-Mode Captioning', 
         text: 'Easily switch between creating simple bookmarks for chapters and detailed subtitles with start/end times.' 

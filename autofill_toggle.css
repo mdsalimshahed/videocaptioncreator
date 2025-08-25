@@ -1,0 +1,82 @@
+/* This file contains styles for the global autofill toggle, based on the CodePen example. */
+
+/* --- Container Layout --- */
+
+.autofill-toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toggle-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    user-select: none; /* Prevent text selection on click */
+}
+
+/* --- Toggle Switch Styles (from CodePen) --- */
+.toggle-btn {
+    width: 51px;
+    height: 26px;
+    background: var(--tertiary-bg); /* Inactive background color */
+    border-radius: 50px;
+    padding: 3px;
+    cursor: pointer;
+    transition: background-color 0.4s ease-in-out;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.toggle-btn.active {
+    background: var(--primary-accent); /* Active background color */
+}
+
+.toggle-btn .round-btn {
+    position: relative;
+    display: block;
+    width: 25px;
+    height: 25px;
+    background: #fff;
+    border-radius: 50%;
+    left: 0;
+    transition: left 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.toggle-btn.active .round-btn {
+    /* MODIFIED: Adjusted the 'left' position from 29px to 26px to remove the gap */
+    left: 26px;
+}
+
+.toggle-btn .cb-value {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* --- Shine Effect on Hover --- */
+.toggle-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.toggle-btn:hover::before {
+    transform: translateX(100%);
+}

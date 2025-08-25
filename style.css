@@ -332,10 +332,34 @@ button:disabled {
     display: none !important;
 }
 
+/* --- START: DEFINITIVE LAYOUT FIX --- */
+
 #bookmarks-header {
+    display: flex;          /* Turns the header into a flexible container */
+    flex-wrap: wrap;        /* Allows items to wrap onto multiple lines */
+    align-items: center;    /* Vertically aligns the title and toggle */
+    row-gap: 10px;          /* Adds vertical space between rows */
     flex-shrink: 0;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
+
+#add-bookmark-btn, #undo-btn, #redo-btn {
+    margin-top: 0px;
+}
+
+/* This rule targets the toggle container directly... */
+#bookmarks-header > .autofill-toggle-container {
+    margin-left: auto;      /* ...and pushes it all the way to the right. */
+    padding-left: 20px;     /* Adds a small gap next to the title. */
+}
+
+/* This rule forces the main action buttons onto their own line below the title */
+#bookmark-panel-controls, #subtitle-panel-controls, #undo-redo-controls {
+    flex-basis: 100%;
+}
+
+/* --- END: DEFINITIVE LAYOUT FIX --- */
+
 
 #bookmarks-title {
     font-size: 1.25rem;
@@ -344,7 +368,6 @@ button:disabled {
 #undo-redo-controls {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
 }
 
 #undo-btn, #redo-btn {
@@ -743,3 +766,90 @@ button:disabled {
         gap: 10px;
     }
 }
+
+/* --- START: FEEDBACK POP-UP STYLES --- */
+
+#feedback-btn {
+    margin-left: auto;
+    background-image: none;
+    background-color: var(--tertiary-bg);
+    padding: 8px 16px;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+#feedback-modal {
+    display: none; /* The pop-up is hidden by default */
+    position: fixed; /* This makes it float on top of the page content */
+    z-index: 2000; /* This ensures it is in front of everything else */
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.7); /* This creates the dark, semi-transparent background */
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    margin: 10% auto; /* This centers the pop-up box on the screen */
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+}
+
+.modal-close-btn {
+    color: var(--border-color);
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-close-btn:hover {
+    color: var(--text-color);
+}
+
+#feedback-form textarea, #feedback-form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+#feedback-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: var(--secondary-accent);
+}
+
+#feedback-submit-btn {
+    width: 100%;
+    padding: 12px;
+}
+
+#feedback-status {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+/* --- END: FEEDBACK POP-UP STYLES --- */
