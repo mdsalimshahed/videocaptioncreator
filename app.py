@@ -27,9 +27,19 @@ def upload_file():
 
     try:
         print("Attempting to forward file to file.io...")
-        response = requests.post('https://file.io', files=files_to_forward, timeout=10) # Added a 10-second timeout
+        response = requests.post('https://file.io', files=files_to_forward, timeout=15) # Increased timeout
         response.raise_for_status()
-        print("Successfully forwarded file. Response from file.io:", response.status_code)
+        print(f"Successfully forwarded file. Response from file.io: {response.status_code}")
+        
+        # Log the raw response text for better debugging
+        print(f"Raw response text from file.io: '{response.text}'")
+
+        # FIX: Check for an empty or whitespace-only response before trying to parse JSON
+        if not response.text or not response.text.strip():
+            print("Error: file.io returned a successful status but with an empty body.")
+            return jsonify({"success": False, "error": "File hosting service returned an invalid (empty) response."}), 500
+
+        # If we have a non-empty body, proceed to parse it
         return jsonify(response.json())
 
     except requests.exceptions.RequestException as e:
