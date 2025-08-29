@@ -1,0 +1,126 @@
+/* floating_nav.css */
+
+:root {
+    --primary-bg: #111827;
+    --secondary-bg: #1F2937;
+    --primary-accent: #8B5CF6;
+    --highlight-accent: #FBBF24;
+    --text-color: #E5E7EB;
+    --border-color: #4B5563;
+}
+
+.floating-nav {
+    position: fixed;
+    top: 75%; /* Lowered from 60% */
+    transform: translateY(-50%);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* --- Left and Right Side Positioning --- */
+.floating-nav-left {
+    left: 20px;
+}
+
+.floating-nav-right {
+    right: 20px;
+}
+
+
+.nav-button {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    position: relative;
+}
+
+/* Adjust button alignment for the right side */
+.floating-nav-right .nav-button {
+    justify-content: flex-end;
+}
+
+.nav-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--secondary-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--border-color);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    z-index: 2;
+    animation: float 6s ease-in-out infinite;
+}
+
+.nav-button:nth-child(2) .nav-icon { animation-delay: 1.5s; }
+.floating-nav-right .nav-button:nth-child(1) .nav-icon { animation-delay: 3s; }
+.floating-nav-right .nav-button:nth-child(2) .nav-icon { animation-delay: 4.5s; }
+
+.nav-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--text-color);
+    transition: fill 0.3s ease;
+}
+
+/* --- Ribbon Styles --- */
+.nav-ribbon {
+    position: absolute;
+    background-image: linear-gradient(to right, var(--primary-accent), var(--secondary-accent));
+    color: white;
+    white-space: nowrap;
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    z-index: 1;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    overflow: hidden;
+    max-width: 250px;
+}
+
+/* Left side ribbon (slides right) */
+.floating-nav-left .nav-ribbon {
+    left: 35px;
+    padding: 10px 15px 10px 30px;
+    border-radius: 0 25px 25px 0;
+    transform: translateX(-100%);
+}
+
+/* Right side ribbon (slides left) */
+.floating-nav-right .nav-ribbon {
+    right: 35px;
+    padding: 10px 30px 10px 15px;
+    border-radius: 25px 0 0 25px;
+    transform: translateX(100%);
+}
+
+
+.nav-speech-bubble {
+    display: none;
+}
+
+/* --- Hover Effects --- */
+.nav-button:hover .nav-icon {
+    background-color: var(--primary-accent);
+    transform: scale(1.1);
+    animation-play-state: paused;
+}
+
+.nav-button:hover .nav-icon svg {
+    fill: white;
+}
+
+.nav-button:hover .nav-ribbon {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}

@@ -24,15 +24,10 @@ const app = {
     subtitlePlaybackId: null,
     subtitleGlowTimeoutId: null,
     isViewerLocked: false,
-    isResizing: false,
-    featureInterval: null,
-    currentFeatureIndex: 0,
-    isResizing: false,
     featureInterval: null,
     currentFeatureIndex: 0,
     selectedSeekInterval: null,
-    featureMouseLeaveTimeout: null, // ADD THIS LINE
-
+    featureMouseLeaveTimeout: null,
     isGlobalAutofillEnabled: false,
 
     // --- DOM ELEMENT REFERENCES ---
@@ -56,7 +51,6 @@ const app = {
         this.playerContainer = document.getElementById('player-container');
         this.undoBtn = document.getElementById('undo-btn');
         this.redoBtn = document.getElementById('redo-btn');
-        this.startOverBtn = document.getElementById('start-over-btn');
         this.bookmarksTitle = document.getElementById('bookmarks-title');
         this.bookmarksDropdown = document.querySelector('.bookmarks-dropdown');
         this.currentTimeDisplay = document.getElementById('current-time-display');
@@ -80,7 +74,6 @@ const app = {
     },
 
     addEventListeners() {
-        // Main controls
         this.logo.addEventListener('click', this.startOver.bind(this));
         this.loadVideoBtn.addEventListener('click', this.loadVideo.bind(this));
         this.addBookmarkBtn.addEventListener('click', this.addBookmark.bind(this));
@@ -88,10 +81,7 @@ const app = {
         this.generateDescBtn.addEventListener('click', this.generateDescription.bind(this));
         this.undoBtn.addEventListener('click', this.undo.bind(this));
         this.redoBtn.addEventListener('click', this.redo.bind(this));
-        this.startOverBtn.addEventListener('click', this.startOver.bind(this));
         this.copyDescBtn.addEventListener('click', this.copyDescription.bind(this));
-
-        // Input and interaction listeners
         this.videoUrlInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.loadVideo();
         });
@@ -101,21 +91,13 @@ const app = {
         this.bookmarksListContainer.addEventListener('input', this.handleInputChange.bind(this));
         this.bookmarksListContainer.addEventListener('change', this.handleInputCommit.bind(this));
         this.bookmarksListContainer.addEventListener('focusout', () => setTimeout(() => this.hideSuggestions(), 150));
-        
-        // Player controls
         this.speedControls.addEventListener('click', this.handleSpeedControl.bind(this));
         this.playbackControls.addEventListener('click', this.handlePlaybackControl.bind(this));
-        
-        // Hover states
         this.bookmarksListContainer.addEventListener('mouseenter', this.handleBookmarksMouseEnter.bind(this));
         this.bookmarksListContainer.addEventListener('mouseleave', this.handleBookmarksMouseLeave.bind(this));
         this.playerContainer.addEventListener('mouseenter', () => { this.isHoveringPlayer = true; });
         this.playerContainer.addEventListener('mouseleave', () => { this.isHoveringPlayer = false; });
-
-        // Keyboard shortcuts
         document.addEventListener('keydown', this.handleGlobalKeyDown.bind(this));
-
-        // Dropdowns and subtitle controls
         this.bookmarksDropdown.addEventListener('click', this.switchActivePanel.bind(this));
         this.setStartBtn.addEventListener('click', this.setSubtitleStart.bind(this));
         this.setEndBtn.addEventListener('click', this.setSubtitleEnd.bind(this));
@@ -147,27 +129,43 @@ const app = {
             this.showMessage("Invalid URL. Please provide a valid video link.");
             return;
         }
-        
-        this.logo.classList.remove('animating');
-        this.currentVideoId = videoId;
-        this.landingPage.classList.add('hidden');
-        this.mainContent.classList.remove('hidden');
 
-        if (this.player) {
-            this.player.loadVideoById(videoId);
-        } else {
-            this.player = new YT.Player('player', {
-                height: '100%',
-                width: '100%',
-                videoId: videoId,
-                playerVars: { 'playsinline': 1, 'iv_load_policy': 3 },
-                events: { 
-                    'onReady': this.onPlayerReady.bind(this),
-                    'onStateChange': this.onPlayerStateChange.bind(this)
+        const setupPlayer = () => {
+            this.currentVideoId = videoId;
+            if (this.player) {
+                this.player.loadVideoById(videoId);
+            } else {
+                this.player = new YT.Player('player', {
+                    height: '100%',
+                    width: '100%',
+                    videoId: videoId,
+                    playerVars: { 'playsinline': 1, 'iv_load_policy': 3 },
+                    events: { 
+                        'onReady': this.onPlayerReady.bind(this),
+                        'onStateChange': this.onPlayerStateChange.bind(this)
+                    }
+                });
+            }
+            this.loadAndRenderBookmarks();
+        };
+
+        if (window.animations && typeof window.animations.runExitLandingPageAnimation === 'function') {
+            window.animations.runExitLandingPageAnimation().then(() => {
+                this.logo.classList.remove('animating');
+                this.landingPage.classList.add('hidden');
+                this.mainContent.classList.remove('hidden');
+
+                if (window.animations && typeof window.animations.runWorkspaceIntroAnimation === 'function') {
+                    window.animations.runWorkspaceIntroAnimation();
                 }
+                setupPlayer();
             });
+        } else {
+            this.logo.classList.remove('animating');
+            this.landingPage.classList.add('hidden');
+            this.mainContent.classList.remove('hidden');
+            setupPlayer();
         }
-         this.loadAndRenderBookmarks();
     },
 
     onPlayerReady() {
@@ -217,26 +215,26 @@ const app = {
         const paddedS = s.toString().padStart(2, '0');
         const paddedM = m.toString().padStart(2, '0');
 
-        return (h > 0) ? `${h}:${paddedM}:${paddedS}` : `${paddedM}:${paddedS}`;
+        return (h > 0) ? `${h}:${paddedM}:${paddedS}` : `${m.toString().padStart(2, '0')}:${paddedS}`;
     },
     
     parseChapterTime(timeString) {
         const parts = String(timeString).split(':').map(Number).reverse();
         let seconds = 0;
-        if (parts.length > 0) seconds += parts[0];      // seconds
-        if (parts.length > 1) seconds += parts[1] * 60;  // minutes
-        if (parts.length > 2) seconds += parts[2] * 3600; // hours
+        if (parts.length > 0) seconds += parts[0];
+        if (parts.length > 1) seconds += parts[1] * 60;
+        if (parts.length > 2) seconds += parts[2] * 3600;
         return seconds;
     },
 
     parseSrtTime(timeString) {
-          const parts = String(timeString).split(/[:.,]/).map(Number).reverse();
-          let seconds = 0;
-          if (parts.length > 0) seconds += parts[0] / 1000; // milliseconds
-          if (parts.length > 1) seconds += parts[1];       // seconds
-          if (parts.length > 2) seconds += parts[2] * 60;   // minutes
-          if (parts.length > 3) seconds += parts[3] * 3600; // hours
-          return seconds;
+        const parts = String(timeString).split(/[:.,]/).map(Number).reverse();
+        let seconds = 0;
+        if (parts.length > 0) seconds += parts[0] / 1000;
+        if (parts.length > 1) seconds += parts[1];
+        if (parts.length > 2) seconds += parts[2] * 60;
+        if (parts.length > 3) seconds += parts[3] * 3600;
+        return seconds;
     },
 
     // --- BOOKMARK & SUBTITLE MANAGEMENT ---
@@ -326,17 +324,7 @@ const app = {
         if (!bookmark) return;
 
         const bookmarkTime = bookmark.time;
-        const currentTime = this.player.getCurrentTime();
-        const playerState = this.player.getPlayerState();
-        const isAtBookmarkTime = Math.floor(currentTime) === bookmarkTime;
-
-        if (!isAtBookmarkTime || playerState === YT.PlayerState.PLAYING) {
-            this.player.seekTo(bookmarkTime, true);
-            this.player.pauseVideo();
-            setTimeout(() => this.highlightBookmark(index), 50); 
-        } else {
-            this.player.playVideo();
-        }
+        this.player.seekTo(bookmarkTime, true);
     },
 
     highlightBookmark(index) {
@@ -360,30 +348,21 @@ const app = {
 
         const startTime = this.parseSrtTime(subtitle.startTime);
         const endTime = this.parseSrtTime(subtitle.endTime);
-        const currentTime = this.player.getCurrentTime();
-        const playerState = this.player.getPlayerState();
 
-        const isAtStartTime = Math.abs(currentTime - startTime) < 0.1;
+        this.player.seekTo(startTime, true);
+        this.player.playVideo();
 
-        if (!isAtStartTime || playerState === YT.PlayerState.PLAYING) {
-            this.player.seekTo(startTime, true);
-            this.player.pauseVideo();
-            this.currentTimeDisplay.textContent = subtitle.startTime;
-            this.isViewerLocked = true;
-        } else {
-            this.player.playVideo();
-            const monitorPlayback = () => {
-                if (this.player && typeof this.player.getCurrentTime === 'function' && this.player.getCurrentTime() >= endTime) {
-                    this.player.pauseVideo();
-                    this.currentTimeDisplay.textContent = subtitle.endTime;
-                    this.isViewerLocked = true;
-                    this.subtitlePlaybackId = null;
-                } else {
-                    this.subtitlePlaybackId = requestAnimationFrame(monitorPlayback);
-                }
+        const monitorPlayback = () => {
+            if (this.player && typeof this.player.getCurrentTime === 'function' && this.player.getCurrentTime() >= endTime) {
+                this.player.pauseVideo();
+                this.currentTimeDisplay.textContent = subtitle.endTime;
+                this.isViewerLocked = true;
+                this.subtitlePlaybackId = null;
+            } else {
+                this.subtitlePlaybackId = requestAnimationFrame(monitorPlayback);
             }
-            this.subtitlePlaybackId = requestAnimationFrame(monitorPlayback);
-        }
+        };
+        this.subtitlePlaybackId = requestAnimationFrame(monitorPlayback);
     },
 
     // --- UI & EVENT HANDLERS ---
@@ -395,16 +374,13 @@ const app = {
         const index = parseInt(bookmarkItem.dataset.index);
         if (isNaN(index)) return;
 
-        const playButton = target.closest('.seek-btn');
-        const deleteButton = target.closest('.delete-btn');
-
-        if (playButton) {
+        if (target.closest('.seek-btn')) {
             if (this.activeBookmarkPanel == 1) this.playBookmarkSegment(index);
             else this.playSubtitleSegment(index);
             return; 
         }
         
-        if (deleteButton) {
+        if (target.closest('.delete-btn')) {
             this.bookmarks[this.activeBookmarkPanel].splice(index, 1);
             if (this.activeBookmarkPanel == 2 && this.selectedSubtitleIndex === index) {
                 this.selectedSubtitleIndex = -1;
@@ -548,72 +524,6 @@ const app = {
         }
     },
 
-    // showSuggestions(input) {
-    //     this.hideSuggestions();
-    //     const currentVal = input.value;
-    //     const cursorPosition = input.selectionStart;
-    //     const textBeforeCursor = currentVal.substring(0, cursorPosition);
-
-    //     if (textBeforeCursor.length < 1) return;
-
-    //     const currentIndex = parseInt(input.dataset.index);
-    //     const otherNotes = this.bookmarks[this.activeBookmarkPanel]
-    //         .filter((bm, index) => index !== currentIndex && bm.description)
-    //         .map(bm => bm.description);
-
-    //     let matches = [...new Set(otherNotes)].filter(note => 
-    //         note.toLowerCase().startsWith(textBeforeCursor.toLowerCase()) && note.toLowerCase() !== textBeforeCursor.toLowerCase()
-    //     );
-    //     let suggestionType = 'full_phrase';
-
-    //     if (matches.length === 0) {
-    //         const lastSpace = textBeforeCursor.lastIndexOf(' ');
-    //         const currentWord = textBeforeCursor.substring(lastSpace + 1);
-
-    //         if (currentWord.length > 0) {
-    //             const potentialMatches = new Set();
-    //             otherNotes.forEach(note => {
-    //                 const words = note.split(/\s+/);
-    //                 words.forEach((word, index) => {
-    //                     if (word.toLowerCase().startsWith(currentWord.toLowerCase())) {
-    //                         const restOfPhrase = words.slice(index).join(' ');
-    //                         potentialMatches.add(restOfPhrase);
-    //                     }
-    //                 });
-    //             });
-    //             matches = [...potentialMatches];
-    //             suggestionType = 'partial_phrase';
-    //         }
-    //     }
-        
-    //     if (matches.length === 0) return;
-
-    //     this.suggestionsContainer = document.createElement('div');
-    //     this.suggestionsContainer.className = 'autofill-suggestions';
-    //     this.suggestionsContainer.dataset.suggestionType = suggestionType;
-        
-    //     matches.forEach((match, index) => {
-    //         const item = document.createElement('div');
-    //         item.className = 'suggestion-item';
-    //         item.textContent = match;
-    //         if (index === 0) item.classList.add('active');
-
-    //         item.addEventListener('mousedown', (e) => {
-    //             e.preventDefault();
-    //             this.applySuggestion(input, match, this.suggestionsContainer.dataset.suggestionType);
-    //             this.hideSuggestions();
-    //         });
-    //         this.suggestionsContainer.appendChild(item);
-    //     });
-
-    //     const inputRect = input.getBoundingClientRect();
-    //     this.suggestionsContainer.style.left = `${inputRect.left + window.scrollX}px`;
-    //     this.suggestionsContainer.style.top = `${inputRect.bottom + window.scrollY}px`;
-    //     this.suggestionsContainer.style.width = `${inputRect.width}px`;
-
-    //     document.body.appendChild(this.suggestionsContainer);
-    // },
-
     showSuggestions(input) {
         this.hideSuggestions();
         const currentVal = input.value;
@@ -626,7 +536,6 @@ const app = {
         let otherNotes = [];
 
         if (this.isGlobalAutofillEnabled) {
-            // Global search: iterate through all bookmarks in localStorage
             for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
                 if (key.startsWith('yt_bookmarks_')) {
@@ -639,13 +548,10 @@ const app = {
                                 }
                             });
                         }
-                    } catch (e) {
-                        // Silently ignore parsing errors for corrupted data
-                    }
+                    } catch (e) {}
                 }
             }
         } else {
-            // Local search: use only bookmarks from the current video
             otherNotes = this.bookmarks[this.activeBookmarkPanel]
                 .filter((bm, index) => index !== currentIndex && bm.description)
                 .map(bm => bm.description);
@@ -676,22 +582,15 @@ const app = {
             }
         }
         
-        // --- START: Added Fix ---
-        // Filter out any empty strings or suggestions that are identical to the user's input.
         const cleanedMatches = matches.filter(match => match.trim() !== '' && match.toLowerCase() !== textBeforeCursor.toLowerCase());
 
-        // If after cleaning, there are no matches, exit the function.
-        if (cleanedMatches.length === 0) {
-            return;
-        }
-        // --- END: Added Fix ---
+        if (cleanedMatches.length === 0) return;
 
         this.suggestionsContainer = document.createElement('div');
         this.suggestionsContainer.className = 'autofill-suggestions';
         this.suggestionsContainer.dataset.suggestionType = suggestionType;
         
-        // Use the cleanedMatches array to build the suggestions list.
-        cleanedMatches.slice(0, 10).forEach((match, index) => { // Limit to 10 suggestions for performance
+        cleanedMatches.slice(0, 10).forEach((match, index) => {
             const item = document.createElement('div');
             item.className = 'suggestion-item';
             item.textContent = match;
@@ -712,6 +611,7 @@ const app = {
 
         document.body.appendChild(this.suggestionsContainer);
     },
+    
     applySuggestion(input, suggestion, type) {
         const textBeforeCursor = input.value.substring(0, input.selectionStart);
         
@@ -775,46 +675,6 @@ const app = {
     },
 
     // --- DATA OUTPUT & SAVING ---
-    // generateDescription() {
-    //     const currentList = this.bookmarks[this.activeBookmarkPanel];
-    //     this.youtubeOutput.readOnly = false;
-
-    //     if (currentList.length === 0) {
-    //         this.youtubeOutput.value = "No entries added yet.";
-    //         this.youtubeOutput.classList.remove('hidden');
-    //         this.copyDescBtn.classList.add('hidden');
-    //         this.saveAsBtnContainer.classList.add('hidden');
-    //         return;
-    //     }
-        
-    //     if (!this.player || typeof this.player.getVideoData !== 'function') {
-    //         this.showMessage("Player is not ready or video data is unavailable.");
-    //         return;
-    //     }
-
-    //     let output = "";
-    //     if (this.activeBookmarkPanel == 1) {
-    //         const videoTitle = this.player.getVideoData().title;
-    //         output = `${videoTitle}\n\n`;
-    //         if (currentList.length === 0 || currentList[0].time > 0) {
-    //             output += "00:00 Intro\n";
-    //         }
-    //         currentList.forEach(bookmark => {
-    //             const desc = bookmark.description || "Untitled";
-    //             output += `${this.formatTime(bookmark.time)} ${desc.replace(/\n/g, ' ')}\n`;
-    //         });
-    //     } else {
-    //         currentList.forEach((subtitle, index) => {
-    //             output += `${index + 1}\n${subtitle.startTime} --> ${subtitle.endTime}\n${subtitle.description || ""}\n\n`;
-    //         });
-    //     }
-
-    //     this.youtubeOutput.value = output.trim();
-    //     this.youtubeOutput.classList.remove('hidden');
-    //     this.copyDescBtn.classList.remove('hidden');
-    //     this.saveAsBtnContainer.classList.remove('hidden');
-    //     this.updateSaveAsOptions();
-    // },
     generateDescription() {
         const currentList = this.bookmarks[this.activeBookmarkPanel];
         this.youtubeOutput.readOnly = false;
@@ -844,39 +704,32 @@ const app = {
                 output += `${this.formatTime(bookmark.time)} ${desc.replace(/\n/g, ' ')}\n`;
             });
 
-            // --- START: New logic to append promo text to output ---
             const lastBookmark = currentList[currentList.length - 1];
             const promoTime = lastBookmark.time + 1;
             const formattedPromoTime = this.formatTime(promoTime);
             output += `${formattedPromoTime} Video Chapters created on videocaptioncreator.pages.dev\n`;
-            // --- END: New logic ---
 
-        } else { // This handles the subtitle panel
+        } else {
             currentList.forEach((subtitle, index) => {
                 output += `${index + 1}\n${subtitle.startTime} --> ${subtitle.endTime}\n${subtitle.description || ""}\n\n`;
             });
             
-            // --- START: New logic to append promo text to output ---
             const lastSubtitle = currentList[currentList.length - 1];
             const videoDuration = this.player.getDuration();
             const lastEndTime = this.parseSrtTime(lastSubtitle.endTime);
-
             const promoStartTime = lastEndTime + 1;
             const promoEndTime = videoDuration;
 
-            // Only add the entry if there is a valid time range
             if (promoStartTime < promoEndTime) {
                 const promoIndex = currentList.length + 1;
                 const formattedStartTime = this.formatTimeForViewer(promoStartTime);
                 const formattedEndTime = this.formatTimeForViewer(promoEndTime);
                 const promoDescription = "Subtitles created on  videocaptioncreator.pages.dev";
-                // Ensure a newline separates from the previous entry
                 if (!output.endsWith('\n\n')) {
                     output += '\n';
                 }
                 output += `${promoIndex}\n${formattedStartTime} --> ${formattedEndTime}\n${promoDescription}\n\n`;
             }
-            // --- END: New logic ---
         }
 
         this.youtubeOutput.value = output.trim();
@@ -885,6 +738,7 @@ const app = {
         this.saveAsBtnContainer.classList.remove('hidden');
         this.updateSaveAsOptions();
     },
+    
     copyDescription() {
         navigator.clipboard.writeText(this.youtubeOutput.value).then(() => {
             this.copyDescBtn.textContent = 'Copied!';
@@ -904,10 +758,9 @@ const app = {
 
         let activeIndex = -1;
         const currentList = this.bookmarks[this.activeBookmarkPanel];
-        const parseFunc = this.activeBookmarkPanel == 1 ? this.parseChapterTime : this.parseSrtTime;
         
         for (let i = currentList.length - 1; i >= 0; i--) {
-            const itemTime = (this.activeBookmarkPanel == 1) ? currentList[i].time : parseFunc(currentList[i].startTime);
+            const itemTime = (this.activeBookmarkPanel == 1) ? currentList[i].time : this.parseSrtTime(currentList[i].startTime);
             const comparisonTime = (this.activeBookmarkPanel == 1) ? Math.floor(currentTime) : currentTime;
 
             if (comparisonTime >= itemTime) {
@@ -922,11 +775,12 @@ const app = {
                     item.classList.add('active-bookmark');
                     if (!this.isHoveringBookmarks) {
                         const container = this.bookmarksListContainer;
-                        const itemTop = item.offsetTop - container.offsetTop;
-                        const itemHeight = item.offsetHeight;
-                        const containerHeight = container.clientHeight;
-                        const desiredScrollTop = itemTop - (containerHeight / 2) + (itemHeight / 2);
-                        container.scrollTo({ top: desiredScrollTop, behavior: 'smooth' });
+                        // Center the item within the container
+                        const scrollPosition = item.offsetTop - container.offsetTop - (container.clientHeight / 2) + (item.clientHeight / 2);
+                        container.scrollTo({
+                            top: scrollPosition,
+                            behavior: 'smooth'
+                        });
                     }
                 }
             } else {
@@ -1075,6 +929,7 @@ const app = {
             this.player.destroy();
             this.player = null;
         }
+
         this.logo.classList.add('animating');
         this.currentVideoId = null;
         this.bookmarks = { 1: [], 2: [] };
@@ -1090,6 +945,10 @@ const app = {
         this.mainContent.classList.add('hidden');
         this.landingPage.classList.remove('hidden');
         this.currentTimeDisplay.textContent = this.formatTime(0);
+
+        // if (window.animations && typeof window.animations.runLandingPageIntroAnimation === 'function') {
+        window.animations.runLandingPageIntroAnimation();
+        // }
     },
 
     adjustTextareaHeight(textarea) {
@@ -1216,47 +1075,72 @@ const app = {
     },
 
     // --- LANDING PAGE FEATURES ---
-    cycleFeatures() {
+    async cycleFeatures() {
+        if (!this.featuresGrid || typeof featureData === 'undefined') return;
+    
+        const FADE_DURATION = 500; // ms
+        const STAGGER_DELAY = 150; // ms
+    
+        // 1. Fade out existing cards
+        const existingCards = this.featuresGrid.querySelectorAll('.feature-card');
+        if (existingCards.length > 0) {
+            existingCards.forEach(card => {
+                card.style.animation = `card-fade-out ${FADE_DURATION / 1000}s ease-in forwards`;
+            });
+            await new Promise(resolve => setTimeout(resolve, FADE_DURATION));
+        }
+    
+        // 2. Clear grid and create new cards
+        this.featuresGrid.innerHTML = '';
         const cardsPerView = window.innerWidth < 600 ? 1 : 2;
-        
-        Array.from(this.featuresGrid.children).forEach(child => child.classList.remove('visible'));
-
-        setTimeout(() => {
-            this.featuresGrid.innerHTML = '';
-            for (let i = 0; i < cardsPerView; i++) {
-                const index = (this.currentFeatureIndex + i) % featureData.length;
-                const data = featureData[index];
-                
-                const card = document.createElement('div');
-                card.className = 'feature-card';
-                card.innerHTML = `${data.icon}<h3>${data.title}</h3><p>${data.text}</p>`;
-                this.featuresGrid.appendChild(card);
-
-                setTimeout(() => card.classList.add('visible'), 50 + (150 * i));
-            }
-            this.currentFeatureIndex = (this.currentFeatureIndex + cardsPerView) % featureData.length;
-        }, 500);
+        const newCards = [];
+    
+        for (let i = 0; i < cardsPerView; i++) {
+            const index = (this.currentFeatureIndex + i) % featureData.length;
+            const data = featureData[index];
+    
+            const card = document.createElement('div');
+            card.className = 'feature-card';
+            card.innerHTML = `${data.icon}<h3>${data.title}</h3><p>${data.text}</p>`;
+            this.featuresGrid.appendChild(card);
+            newCards.push(card);
+        }
+    
+        // 3. Fade in new cards with a stagger effect
+        if (newCards[0]) {
+            newCards[0].style.animation = `card-fade-in ${FADE_DURATION / 1000}s ease-out forwards`;
+        }
+        if (newCards[1]) {
+            setTimeout(() => {
+                newCards[1].style.animation = `card-fade-in ${FADE_DURATION / 1000}s ease-out forwards`;
+            }, STAGGER_DELAY);
+        }
+    
+        // 4. Update index for the next cycle
+        this.currentFeatureIndex = (this.currentFeatureIndex + cardsPerView) % featureData.length;
     },
-
-    // In app.js
+    
     startFeatureCycle() {
+        if (!this.featuresGrid) return;
         clearInterval(this.featureInterval);
-        this.cycleFeatures();
-        this.featureInterval = setInterval(this.cycleFeatures.bind(this), 4000);
-
+        
+        this.cycleFeatures(); // Run the first cycle immediately
+    
+        const VISIBLE_DURATION = 3000;
+        const FADE_OUT_DURATION = 500;
+        this.featureInterval = setInterval(this.cycleFeatures.bind(this), VISIBLE_DURATION + FADE_OUT_DURATION);
+    
         this.featuresGrid.onmouseenter = () => {
             clearInterval(this.featureInterval);
-            // Clear any pending timeout to prevent restart if user hovers again quickly
             if (this.featureMouseLeaveTimeout) {
                 clearTimeout(this.featureMouseLeaveTimeout);
             }
         };
-
+    
         this.featuresGrid.onmouseleave = () => {
-            // Wait 2 seconds before restarting the cycle
             this.featureMouseLeaveTimeout = setTimeout(() => {
                 this.startFeatureCycle();
-            }, 2000);
+            }, 2000); // Restart after a 2-second delay
         };
     }
 };
@@ -1265,3 +1149,4 @@ const app = {
 document.addEventListener('DOMContentLoaded', () => {
     app.init();
 });
+

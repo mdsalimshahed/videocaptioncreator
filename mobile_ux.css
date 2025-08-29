@@ -90,4 +90,23 @@
         padding: 8px;
         font-size: 12px;
     }
+
+    #site-footer {
+    position: fixed;
+    bottom: 1px;
+    /* Use left and right to span the full width */
+    left: 0;
+    right: 0;
+    z-index: 1002;
+    
+    /* Use Flexbox to center the text content */
+    display: flex;
+    justify-content: center;
+
+    /* Original text styling */
+    color: var(--border-color);
+    font-size: 0.8em;
+    }
+
+    
 }

@@ -12,30 +12,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="floating_nav.css">
     <link rel="stylesheet" href="resizer.css">
     <link rel="stylesheet" href="selectable_seek.css">
     <link rel="stylesheet" href="mobile_ux.css">
     <link rel="stylesheet" href="slider_controls.css">
     <link rel="stylesheet" href="autofill_toggle.css">
+    <link rel="stylesheet" href="animations.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7990160105322809" crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-7990160105322809">
 </head>
 <body>
-    
+    <div id="landing-page-links">
+    <div class="floating-nav floating-nav-left">
+        <a href="#" class="nav-button">
+            <div class="nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" /></svg>
+            </div>
+            <span class="nav-ribbon">Blogs & Walkthroughs</span>
+            <span class="nav-speech-bubble">Blogs & Walkthroughs</span>
+        </a>
+        <a href="#" class="nav-button">
+            <div class="nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z" /></svg>
+            </div>
+            <span class="nav-ribbon">Privacy Policy</span>
+            <span class="nav-speech-bubble">Privacy Policy</span>
+        </a>
+    </div>
+    <div class="floating-nav floating-nav-right">
+        <a href="#" class="nav-button">
+            <div class="nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>
+            </div>
+            <span class="nav-ribbon">About Us</span>
+            <span class="nav-speech-bubble">About Us</span>
+        </a>
+        <a href="#" class="nav-button" id="floating-feedback-btn">
+            <div class="nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" /></svg>
+            </div>
+            <span class="nav-ribbon">Feedback & Contact Us</span>
+            <span class="nav-speech-bubble">Feedback & Contact Us</span>
+        </a>
+    </div>
+</div>
+
     <div id="original-content">
         <header class="site-header">
             <div class="logo-container">
                 <img src="logo/your-logo-filename.png" alt="VideoCaptioner Logo" class="header-logo">
                 <h1 id="logo" class="animating">VideoCC</h1>
             </div>
-
-            <button id="feedback-btn">Leave a Feedback</button>
-
         </header>
 
         <div id="landing-page">
             <p id="tagline">The Ultimate Free Captioning & Chapter Making Tool for YouTube Videos</p>
-            
             <div class="container" id="landing-container">
                 <h2>Let's Get Started</h2>
                 <div id="video-input-section">
@@ -52,7 +84,7 @@
         </div>
         
         <main id="main-content" class="hidden">
-            <button id="start-over-btn">Start Over</button>
+            <button id="start-over-btn" class="hidden">Start Over</button>
             <div id="workspace">
                 <div class="left-column">
                     <div id="speed-controls">
@@ -145,13 +177,8 @@
                 <input type="hidden" name="subject" value="New Feedback from VideoCC">
                 <input type="hidden" name="from_name" value="VideoCC Feedback Form">
 
-                <textarea name="message" id="feedback-message" placeholder="Your message..." rows="6" required></textarea>
-
-                <!-- <label for="attachment-input">Attach images or video (optional, max 10MB):</label>
-                <input type="file" id="attachment-input" name="attachment" multiple> -->
-                <!-- <label for="attachment-input">Attach File (optional, max 100MB):</label>
-                <input type="file" id="attachment-input" name="attachment">
-                <div id="upload-status" style="margin-top: 8px; font-size: 0.9em;"></div> -->
+                <textarea name="message" id="feedback-message" placeholder="Your message..." rows="10" required></textarea>
+                <p class="feedback-reply-message">Include your email if you want us to get back to you.</p>
 
                 <button type="submit" id="feedback-submit-btn">Send Feedback</button>
                 <div id="feedback-status"></div>
@@ -174,5 +201,9 @@
     <script src="resizer.js"></script>
     <script src="player_hotkeys.js"></script>
     <script src="feedback.js"></script>
+    <script src="animations.js"></script>
+    
+    <footer id="site-footer">© 2025 VideoCC. All rights reserved.</footer>
+
 </body>
 </html>

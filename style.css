@@ -34,13 +34,13 @@
 
 
 @keyframes white-glow {
-    0%, 100% {  
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);  
-        border: 2px solid rgba(255, 255, 255, 0.8);  
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+        border: 2px solid rgba(255, 255, 255, 0.8);
     }
-    50% {  
-        box-shadow: 0 0 30px rgba(255, 255, 255, 1);  
-        border: 2px solid rgba(255, 255, 255, 1);  
+    50% {
+        box-shadow: 0 0 30px rgba(255, 255, 255, 1);
+        border: 2px solid rgba(255, 255, 255, 1);
     }
 }
 
@@ -86,26 +86,28 @@ body {
 .site-header {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 20px; /* Aligned to the left */
+    width: auto; /* Changed from 100% to auto */
     background-color: var(--primary-bg);
     padding: 15px 20px;
     box-sizing: border-box;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; -- Removed */
     align-items: center;
+    border-radius: 0 0 12px 12px; /* Added rounded corners */
 }
+
 
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 5px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    padding: 5px;
+    padding: 0;
     border-radius: 8px;
 }
 
@@ -117,7 +119,7 @@ body {
 h1 {
     margin: 0;
     font-family: 'Orbitron', sans-serif;
-    font-size: 2.5em;
+    font-size: 2em; /* Reduced from 2.5em */
     background: linear-gradient(90deg, var(--highlight-accent), var(--primary-accent), var(--secondary-accent), var(--highlight-accent));
     background-size: 400% 400%;
     -webkit-background-clip: text;
@@ -532,7 +534,7 @@ button:disabled {
     z-index: 1;
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    top: 100%; 
+    top: 100%;
     left: 0;
     margin-top: 5px;
 }
@@ -587,12 +589,9 @@ button:disabled {
 }
 
 .features-grid {
-    display: flex;
-    gap: 45px;
-    margin:  auto;
-    justify-content: center;
+    margin: auto;
     height: 270px;
-    width: 500px;
+    width: 525px; /* Adjusted for 2 cards (240px) + gap (45px) */
     position: relative;
 }
 
@@ -615,22 +614,27 @@ button:disabled {
     justify-content: center;
     border: 2px solid rgba(251, 191, 36, 0.2);
     box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+    /* Animation properties */
+    position: absolute;
     opacity: 0;
-    transform: translateY(75px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
-    pointer-events: none; /* Make non-interactive by default */
+    will-change: transform, opacity;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    --translateX-offset: 0; /* Define variable for transform */
 }
+
+.feature-card:nth-of-type(1) {
+    left: 0;
+}
+
+.feature-card:nth-of-type(2) {
+    right: 0;
+}
+
 
 .feature-card:hover {
      border-color: rgba(251, 191, 36, 0.5);
      box-shadow: 0 0 25px rgba(251, 191, 36, 0.4);
-     transform: translateY(-5px);
-}
-
-.feature-card.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto; /* Enable interaction when visible */
+     transform: translateX(var(--translateX-offset)) translateY(-5px); /* Use variable in hover */
 }
 
 .feature-card img {
@@ -786,9 +790,9 @@ button:disabled {
     z-index: 2000; /* This ensures it is in front of everything else */
     left: 0;
     top: 0;
-    width: 100%; 
+    width: 100%;
     height: 100%;
-    overflow: auto; 
+    overflow: auto;
     background-color: rgba(0,0,0,0.7); /* This creates the dark, semi-transparent background */
     animation: fadeIn 0.3s ease;
 }
@@ -854,4 +858,23 @@ button:disabled {
     text-align: center;
     font-weight: bold;
 }
-/* --- END: FEEDBACK POP-UP STYLES --- */
+
+/* In style.css */
+
+#site-footer {
+    position: fixed;
+    bottom: 15px;
+    /* Use left and right to span the full width */
+    left: 0;
+    right: 0;
+    z-index: 1002;
+    
+    /* Use Flexbox to center the text content */
+    display: flex;
+    justify-content: center;
+
+    /* Original text styling */
+    color: var(--border-color);
+    font-size: 0.8em;
+}
+
