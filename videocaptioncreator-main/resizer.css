@@ -1,0 +1,32 @@
+#resizer {
+    width: 20px; /* Increase hover area */
+    background-color: transparent;
+    cursor: col-resize;
+    flex-shrink: 0;
+    position: relative;
+    margin: 0 -10px; /* Center the visual element in the gap */
+    z-index: 10;
+}
+
+#resizer::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 10px; /* The visible line */
+    height: 100%;
+    background-color: var(--border-color);
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+#resizer:hover::before {
+    opacity: 1;
+    background-color: var(--highlight-accent);
+}
+
+body.resizing {
+    cursor: col-resize;
+    user-select: none;
+}
