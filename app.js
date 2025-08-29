@@ -536,6 +536,7 @@ const app = {
         let otherNotes = [];
 
         if (this.isGlobalAutofillEnabled) {
+            // Global search: iterate through all bookmarks in localStorage
             for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
                 if (key.startsWith('yt_bookmarks_')) {
@@ -548,10 +549,13 @@ const app = {
                                 }
                             });
                         }
-                    } catch (e) {}
+                    } catch (e) {
+                        // Silently ignore parsing errors for corrupted data
+                    }
                 }
             }
         } else {
+            // Local search: use only bookmarks from the current video
             otherNotes = this.bookmarks[this.activeBookmarkPanel]
                 .filter((bm, index) => index !== currentIndex && bm.description)
                 .map(bm => bm.description);
@@ -582,15 +586,36 @@ const app = {
             }
         }
         
-        const cleanedMatches = matches.filter(match => match.trim() !== '' && match.toLowerCase() !== textBeforeCursor.toLowerCase());
+        // --- START: Added Fix ---
+        // Filter out any empty strings or suggestions that are identical to the user's input.
+        const cleanedMatches = matches.filter(match => {
+            if (match.trim() === '') {
+                return false; // Always remove empty/whitespace-only suggestions.
+            }
 
-        if (cleanedMatches.length === 0) return;
+            if (suggestionType === 'full_phrase') {
+                // For a 'full_phrase' suggestion, the match must not be identical to the entire input.
+                return match.toLowerCase() !== textBeforeCursor.toLowerCase();
+            } else { // suggestionType is 'partial_phrase'
+                // For a 'partial_phrase' suggestion, the match must not be identical to the specific word being typed.
+                const lastSpace = textBeforeCursor.lastIndexOf(' ');
+                const currentWord = textBeforeCursor.substring(lastSpace + 1);
+                return match.toLowerCase() !== currentWord.toLowerCase();
+            }
+        });
+
+        // If after cleaning, there are no matches, exit the function.
+        if (cleanedMatches.length === 0) {
+            return;
+        }
+        // --- END: Added Fix ---
 
         this.suggestionsContainer = document.createElement('div');
         this.suggestionsContainer.className = 'autofill-suggestions';
         this.suggestionsContainer.dataset.suggestionType = suggestionType;
         
-        cleanedMatches.slice(0, 10).forEach((match, index) => {
+        // Use the cleanedMatches array to build the suggestions list.
+        cleanedMatches.slice(0, 10).forEach((match, index) => { // Limit to 10 suggestions for performance
             const item = document.createElement('div');
             item.className = 'suggestion-item';
             item.textContent = match;
@@ -611,7 +636,7 @@ const app = {
 
         document.body.appendChild(this.suggestionsContainer);
     },
-    
+
     applySuggestion(input, suggestion, type) {
         const textBeforeCursor = input.value.substring(0, input.selectionStart);
         
