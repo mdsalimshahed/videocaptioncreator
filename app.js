@@ -524,6 +524,119 @@ const app = {
         }
     },
 
+    // showSuggestions(input) {
+    //     this.hideSuggestions();
+    //     const currentVal = input.value;
+    //     const cursorPosition = input.selectionStart;
+    //     const textBeforeCursor = currentVal.substring(0, cursorPosition);
+
+    //     if (textBeforeCursor.length < 1) return;
+
+    //     const currentIndex = parseInt(input.dataset.index);
+    //     let otherNotes = [];
+
+    //     if (this.isGlobalAutofillEnabled) {
+    //         // Global search: iterate through all bookmarks in localStorage
+    //         for (let i = 0; i < localStorage.length; i++) {
+    //             const key = localStorage.key(i);
+    //             if (key.startsWith('yt_bookmarks_')) {
+    //                 try {
+    //                     const storedData = JSON.parse(localStorage.getItem(key));
+    //                     if (Array.isArray(storedData)) {
+    //                         storedData.forEach(item => {
+    //                             if (item.description) {
+    //                                 otherNotes.push(item.description);
+    //                             }
+    //                         });
+    //                     }
+    //                 } catch (e) {
+    //                     // Silently ignore parsing errors for corrupted data
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         // Local search: use only bookmarks from the current video
+    //         otherNotes = this.bookmarks[this.activeBookmarkPanel]
+    //             .filter((bm, index) => index !== currentIndex && bm.description)
+    //             .map(bm => bm.description);
+    //     }
+
+    //     let matches = [...new Set(otherNotes)].filter(note => 
+    //         note.toLowerCase().startsWith(textBeforeCursor.toLowerCase()) && note.toLowerCase() !== textBeforeCursor.toLowerCase()
+    //     );
+    //     let suggestionType = 'full_phrase';
+
+    //     if (matches.length === 0) {
+    //         const lastSpace = textBeforeCursor.lastIndexOf(' ');
+    //         const currentWord = textBeforeCursor.substring(lastSpace + 1);
+
+    //         if (currentWord.length > 0) {
+    //             const potentialMatches = new Set();
+    //             otherNotes.forEach(note => {
+    //                 const words = note.split(/\s+/);
+    //                 words.forEach((word, index) => {
+    //                     if (word.toLowerCase().startsWith(currentWord.toLowerCase())) {
+    //                         const restOfPhrase = words.slice(index).join(' ');
+    //                         potentialMatches.add(restOfPhrase);
+    //                     }
+    //                 });
+    //             });
+    //             matches = [...potentialMatches];
+    //             suggestionType = 'partial_phrase';
+    //         }
+    //     }
+        
+    //     // --- START: Added Fix ---
+    //     // Filter out any empty strings or suggestions that are identical to the user's input.
+    //     const cleanedMatches = matches.filter(match => {
+    //         if (match.trim() === '') {
+    //             return false; // Always remove empty/whitespace-only suggestions.
+    //         }
+
+    //         if (suggestionType === 'full_phrase') {
+    //             // For a 'full_phrase' suggestion, the match must not be identical to the entire input.
+    //             return match.toLowerCase() !== textBeforeCursor.toLowerCase();
+    //         } else { // suggestionType is 'partial_phrase'
+    //             // For a 'partial_phrase' suggestion, the match must not be identical to the specific word being typed.
+    //             const lastSpace = textBeforeCursor.lastIndexOf(' ');
+    //             const currentWord = textBeforeCursor.substring(lastSpace + 1);
+    //             return match.toLowerCase() !== currentWord.toLowerCase();
+    //         }
+    //     });
+
+    //     // If after cleaning, there are no matches, exit the function.
+    //     if (cleanedMatches.length === 0) {
+    //         return;
+    //     }
+    //     // --- END: Added Fix ---
+
+    //     this.suggestionsContainer = document.createElement('div');
+    //     this.suggestionsContainer.className = 'autofill-suggestions';
+    //     this.suggestionsContainer.dataset.suggestionType = suggestionType;
+        
+    //     // Use the cleanedMatches array to build the suggestions list.
+    //     cleanedMatches.slice(0, 10).forEach((match, index) => { // Limit to 10 suggestions for performance
+    //         const item = document.createElement('div');
+    //         item.className = 'suggestion-item';
+    //         item.textContent = match;
+    //         if (index === 0) item.classList.add('active');
+
+    //         item.addEventListener('mousedown', (e) => {
+    //             e.preventDefault();
+    //             this.applySuggestion(input, match, this.suggestionsContainer.dataset.suggestionType);
+    //             this.hideSuggestions();
+    //         });
+    //         this.suggestionsContainer.appendChild(item);
+    //     });
+
+    //     const inputRect = input.getBoundingClientRect();
+    //     this.suggestionsContainer.style.left = `${inputRect.left + window.scrollX}px`;
+    //     this.suggestionsContainer.style.top = `${inputRect.bottom + window.scrollY}px`;
+    //     this.suggestionsContainer.style.width = `${inputRect.width}px`;
+
+    //     document.body.appendChild(this.suggestionsContainer);
+    // },
+
     showSuggestions(input) {
         this.hideSuggestions();
         const currentVal = input.value;
@@ -532,17 +645,32 @@ const app = {
 
         if (textBeforeCursor.length < 1) return;
 
+        // --- START: SELF-REFERENCE FIX ---
+        // Get the index of the bookmark currently being edited.
         const currentIndex = parseInt(input.dataset.index);
         let otherNotes = [];
 
         if (this.isGlobalAutofillEnabled) {
-            // Global search: iterate through all bookmarks in localStorage
+            // Global search: iterate through all bookmarks in localStorage, but exclude the current one.
+            const currentVideoKey = `yt_bookmarks_${this.currentVideoId}_${this.activeBookmarkPanel}`;
+
             for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
                 if (key.startsWith('yt_bookmarks_')) {
                     try {
                         const storedData = JSON.parse(localStorage.getItem(key));
-                        if (Array.isArray(storedData)) {
+                        if (!Array.isArray(storedData)) continue;
+
+                        if (key === currentVideoKey) {
+                            // This is the array for the current video.
+                            // Add descriptions from all bookmarks EXCEPT the one being edited.
+                            storedData.forEach((item, index) => {
+                                if (index !== currentIndex && item.description) {
+                                    otherNotes.push(item.description);
+                                }
+                            });
+                        } else {
+                            // This is from a different video, so add all descriptions.
                             storedData.forEach(item => {
                                 if (item.description) {
                                     otherNotes.push(item.description);
@@ -555,11 +683,12 @@ const app = {
                 }
             }
         } else {
-            // Local search: use only bookmarks from the current video
+            // Local search already correctly excludes the current bookmark.
             otherNotes = this.bookmarks[this.activeBookmarkPanel]
                 .filter((bm, index) => index !== currentIndex && bm.description)
                 .map(bm => bm.description);
         }
+        // --- END: SELF-REFERENCE FIX ---
 
         let matches = [...new Set(otherNotes)].filter(note => 
             note.toLowerCase().startsWith(textBeforeCursor.toLowerCase()) && note.toLowerCase() !== textBeforeCursor.toLowerCase()
@@ -586,36 +715,27 @@ const app = {
             }
         }
         
-        // --- START: Added Fix ---
-        // Filter out any empty strings or suggestions that are identical to the user's input.
+        // This secondary filter is still useful to clean up any remaining edge cases.
         const cleanedMatches = matches.filter(match => {
-            if (match.trim() === '') {
-                return false; // Always remove empty/whitespace-only suggestions.
-            }
-
+            if (match.trim() === '') return false;
             if (suggestionType === 'full_phrase') {
-                // For a 'full_phrase' suggestion, the match must not be identical to the entire input.
                 return match.toLowerCase() !== textBeforeCursor.toLowerCase();
-            } else { // suggestionType is 'partial_phrase'
-                // For a 'partial_phrase' suggestion, the match must not be identical to the specific word being typed.
+            } else {
                 const lastSpace = textBeforeCursor.lastIndexOf(' ');
                 const currentWord = textBeforeCursor.substring(lastSpace + 1);
                 return match.toLowerCase() !== currentWord.toLowerCase();
             }
         });
 
-        // If after cleaning, there are no matches, exit the function.
         if (cleanedMatches.length === 0) {
             return;
         }
-        // --- END: Added Fix ---
 
         this.suggestionsContainer = document.createElement('div');
         this.suggestionsContainer.className = 'autofill-suggestions';
         this.suggestionsContainer.dataset.suggestionType = suggestionType;
         
-        // Use the cleanedMatches array to build the suggestions list.
-        cleanedMatches.slice(0, 10).forEach((match, index) => { // Limit to 10 suggestions for performance
+        cleanedMatches.slice(0, 10).forEach((match, index) => {
             const item = document.createElement('div');
             item.className = 'suggestion-item';
             item.textContent = match;
@@ -636,7 +756,7 @@ const app = {
 
         document.body.appendChild(this.suggestionsContainer);
     },
-
+    
     applySuggestion(input, suggestion, type) {
         const textBeforeCursor = input.value.substring(0, input.selectionStart);
         
