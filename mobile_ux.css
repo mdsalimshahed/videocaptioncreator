@@ -1,9 +1,9 @@
 /* This file contains styles exclusively for the mobile layout redesign. */
 
 /* Apply the new mobile layout on screens 950px or smaller */
-@media (max-width: 800px) {
+@media (max-width: 700px) {
     #original-content {
-        padding-top: 65px; /* Match desktop top padding */
+        padding-top: 70px; /* Match desktop top padding */
     }
 
     /* LANDING PAGE FIXES */
