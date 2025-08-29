@@ -3,7 +3,7 @@
 /* Apply the new mobile layout on screens 950px or smaller */
 @media (max-width: 800px) {
     #original-content {
-        padding-top: 95px; /* Match desktop top padding */
+        padding-top: 65px; /* Match desktop top padding */
     }
 
     /* LANDING PAGE FIXES */
