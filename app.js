@@ -31,6 +31,8 @@ const app = {
     featureInterval: null,
     currentFeatureIndex: 0,
     selectedSeekInterval: null,
+    featureMouseLeaveTimeout: null, // ADD THIS LINE
+
     isGlobalAutofillEnabled: false,
 
     // --- DOM ELEMENT REFERENCES ---
@@ -1236,12 +1238,26 @@ const app = {
         }, 500);
     },
 
+    // In app.js
     startFeatureCycle() {
         clearInterval(this.featureInterval);
         this.cycleFeatures();
         this.featureInterval = setInterval(this.cycleFeatures.bind(this), 4000);
-        this.featuresGrid.onmouseenter = () => clearInterval(this.featureInterval);
-        this.featuresGrid.onmouseleave = this.startFeatureCycle.bind(this);
+
+        this.featuresGrid.onmouseenter = () => {
+            clearInterval(this.featureInterval);
+            // Clear any pending timeout to prevent restart if user hovers again quickly
+            if (this.featureMouseLeaveTimeout) {
+                clearTimeout(this.featureMouseLeaveTimeout);
+            }
+        };
+
+        this.featuresGrid.onmouseleave = () => {
+            // Wait 2 seconds before restarting the cycle
+            this.featureMouseLeaveTimeout = setTimeout(() => {
+                this.startFeatureCycle();
+            }, 2000);
+        };
     }
 };
 
