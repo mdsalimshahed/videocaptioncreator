@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Making Autofill Smarter - VideoCC Blog</title>
+    <meta name="description" content="A deep dive into the recent bug fix for the Global Autofill feature on VideoCC, ensuring a smoother and more intuitive workflow.">
+    
+    <link rel="icon" href="logo/your-logo-filename.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="floating_nav.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="logo/your-logo-filename.png" alt="VideoCC Logo" class="header-logo">
+            <h1 id="logo" class="animating" onclick="window.location.href='index.html'">VideoCC</h1>
+        </div>
+    </header>
+
+    <div id="original-content">
+        <div class="blog-layout-container">
+            <nav id="toc-sidebar" class="toc-sidebar"></nav>
+            <main class="post-container anim-element">
+                <article>
+                    <header class="post-header">
+                        <span class="post-tag">Bug Fix</span>
+                        <h1>Making Autofill Smarter: Squashing a Pesky Suggestion Bug</h1>
+                    <div class="post-meta">
+                        <span>By The VideoCC Team</span> | <span>August 29, 2025</span>
+                    </div>
+                    <img src="logo/post-autofill-fix.png" alt="A picture of chaos turned into order" class="post-image">
+                </header>
+
+                <div class="post-body">
+                    <p>Here at VideoCC, we're obsessed with workflow and efficiency. Our <strong>Global Autofill</strong> feature is a cornerstone of that obsession, designed to learn from your past work across all videos to speed up repetitive typing.</p>
+                    
+                    <h2>The Bug: An Annoying Echo</h2>
+                    <p>Some of our eagle-eyed users noticed that when typing in a bookmark or subtitle field, the Global Autofill would sometimes suggest the <em>exact text they were already typing</em>. This happened because the system was saving your input on every keystroke, and then reading that fresh input as a potential suggestion for itself. Instead of helping, it was just creating a distracting echo.</p>
+                    
+                    <h2>The Fix: Making Autofill Non-Self-Referential</h2>
+                    <p>Today, we pushed a fix that completely resolves this issue. We've re-engineered the logic to be much smarter. Now, when you start typing, the <code>showSuggestions</code> function identifies the specific bookmark you are currently editing and <strong>explicitly excludes it from the suggestion pool</strong>.</p>
+                    <p>In simple terms, the autofill system can no longer see what you're currently typing. It only looks at <em>other</em> previously completed notes, whether from the current video or any other video you've worked on.</p>
+                    
+                    <h2>The Result: Cleaner, Faster Suggestions</h2>
+                    <p>This fix means every suggestion you see is now a relevant, helpful piece of information from your past work, never a redundant echo of your current input. This makes for a cleaner, faster, and more intuitive annotation experience, letting you focus on the content without distractions.</p>
+                    <p>We're always working to refine the tools you use every day. Thanks for your feedback, and happy captioning!</p>
+
+                    <a href="blog.html" class="back-link">← Back to Blogs</a>
+                </div>
+            </article>
+        </main>
+    </div>
+    
+    <footer id="site-footer">© 2025 VideoCC. All rights reserved.</footer>
+    <script src="animations.js"></script>
+    <script src="toc.js" defer></script>
+
+</body>
+</html>

@@ -863,7 +863,7 @@ button:disabled {
 
 #site-footer {
     position: fixed;
-    bottom: 15px;
+    bottom: 1px;
     /* Use left and right to span the full width */
     left: 0;
     right: 0;

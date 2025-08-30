@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs & Walkthroughs - VideoCC</title>
+    <meta name="description" content="Tutorials, walkthroughs, and articles for VideoCC. Learn how to get the most out of the best free tool for creating YouTube chapters and subtitles.">
+    
+    <!-- Reusing the same fonts and stylesheets -->
+    <link rel="icon" href="logo/your-logo-filename.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="floating_nav.css">
+    <link rel="stylesheet" href="animations.css">
+    <!-- Link to our new blog-specific stylesheet -->
+    <link rel="stylesheet" href="blog.css">
+</head>
+<body class="preload-hidden">
+
+    <div id="original-content">
+        <!-- Reusing the exact same header for a consistent look -->
+        <header class="site-header">
+            <div class="logo-container">
+                <img src="logo/your-logo-filename.png" alt="VideoCC Logo" class="header-logo">
+                <h1 id="logo" class="animating" onclick="window.location.href='index.html'">VideoCC</h1>
+            </div>
+        </header>
+
+        <main class="blog-container">
+            <div class="blog-header">
+                <h1 class="shine-once">Blogs & Walkthroughs</h1>
+                <p>Tutorials, tips, and updates to help you master your creative workflow.</p>
+            </div>
+
+            <div class="blog-grid">
+
+                <!-- Blog Post: Summer 2025 Update -->
+                <a href="post-huge-update.html" class="blog-card anim-element">
+                    <div class="card-main-title">
+                        August 2025 Update: A Polished New Blog, Smarter UI, and Major Bug Fixes
+                    </div>
+                    <div class="card-preview-grid">
+                        <img src="logo/post-huge.png" alt="A laptop showing lines of code in an editor" class="blog-card-image">
+                        <div class="card-preview-text">
+                            <h3>Announcing Our Biggest Update Yet...</h3>
+                            <p>We're excited to launch the official VideoCC blog, alongside a host of UI improvements and critical bug fixes that make your workflow smoother than ever...</p>
+                            <div class="card-meta">
+                                <span>By The VideoCC Team</span> | <span>August 30, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Blog Post: SEO & Growth -->
+                 <a href="post-seo-bookmarks.html" class="blog-card anim-element">
+                    <div class="card-main-title">
+                        Boost Your YouTube SEO: How Video Chapters Get You More Views
+                    </div>
+                    <div class="card-preview-grid">
+                        <img src="logo/post-seo.png" alt="A person analyzing graphs on a laptop" class="blog-card-image">
+                        <div class="card-preview-text">
+                            <h3>Supercharge Your Discoverability...</h3>
+                            <p>Learn how adding chapters to your videos can dramatically improve your rankings on both YouTube and Google search...</p>
+                            <div class="card-meta">
+                                <span>By The VideoCC Team</span> | <span>August 29, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Blog Post: The Official Walkthrough -->
+                <a href="post-walkthrough.html" class="blog-card anim-element">
+                    <div class="card-main-title">
+                        From Start to Finish: The Official VideoCC Guide
+                    </div>
+                    <div class="card-preview-grid">
+                        <img src="logo/post-walk.png" alt="A person working at a well-organized desk" class="blog-card-image">
+                        <div class="card-preview-text">
+                            <h3>The Complete User Guide...</h3>
+                            <p>New to VideoCC or just want to make sure you're using it to its full potential? This complete guide covers every feature...</p>
+                             <div class="card-meta">
+                                <span>By The VideoCC Team</span> | <span>August 29, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Blog Post: Autofill Bug Fix -->
+                <a href="post-autofill-fix.html" class="blog-card anim-element">
+                    <div class="card-main-title">
+                        Making Autofill Smarter: Squashing a Pesky Suggestion Bug
+                    </div>
+                    <div class="card-preview-grid">
+                        <img src="logo/post-autofill-fix.png" alt="Code on a screen" class="blog-card-image">
+                        <div class="card-preview-text">
+                            <h3>Making Autofill Smarter...</h3>
+                            <p>Here at VideoCC, we're obsessed with workflow and efficiency. Our <strong>Global Autofill</strong> feature is a cornerstone of that obsession...</p>
+                             <div class="card-meta">
+                                <span>By The VideoCC Team</span> | <span>August 29, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Reusing the feedback modal -->
+    <div id="feedback-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close-btn">&times;</span>
+            <h2>Feedback & Support</h2>
+            <p>Report a bug, request a feature, or leave a comment.</p>
+            <form id="feedback-form">
+                <input type="hidden" name="access_key" value="80f113cc-dcba-46b4-81ea-87ab6451c60e">
+                <input type="hidden" name="subject" value="New Feedback from VideoCC">
+                <input type="hidden" name="from_name" value="VideoCC Feedback Form">
+
+                <textarea name="message" id="feedback-message" placeholder="Your message..." rows="10" required></textarea>
+                <p class="feedback-reply-message">Include your email if you want us to get back to you.</p>
+
+                <button type="submit" id="feedback-submit-btn">Send Feedback</button>
+                <div id="feedback-status"></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Reusing the same footer -->
+    <footer id="site-footer">© 2025 VideoCC. All rights reserved.</footer>
+
+    <!-- Add necessary scripts -->
+    <script src="feedback.js"></script>
+    <script src="floating_nav.js"></script>
+    <script src="app.js"></script>
+    <script src="animations.js"></script>
+</body>
+</html>

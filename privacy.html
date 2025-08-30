@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - VideoCC</title>
+    <meta name="description" content="Official Privacy Policy for VideoCC. Learn about how we handle data, use third-party services like Google AdSense and the YouTube API, and protect your privacy.">
+    
+    <link rel="icon" href="logo/your-logo-filename.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="floating_nav.css">
+    <link rel="stylesheet" href="animations.css">
+    
+    <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="logo/your-logo-filename.png" alt="VideoCC Logo" class="header-logo">
+            <h1 id="logo" class="animating" onclick="window.location.href='index.html'">VideoCC</h1>
+        </div>
+    </header>
+
+    <div id="original-content">
+        <div class="blog-layout-container">
+            <nav id="toc-sidebar" class="toc-sidebar"></nav>
+            <main class="post-container anim-element">
+                <article>
+                    <header class="post-header">
+                        <span class="post-tag">Legal</span>
+                        <h1>Privacy Policy for VideoCC</h1>
+                        <div class="post-meta">
+                            <span>Last Updated: August 30, 2025</span>
+                        </div>
+                    </header>
+
+                    <div class="post-body">
+                    
+                        <h2>1. Introduction</h2>
+                        <p>VideoCC, herein referred to as “we,” “us,” or “our,” operates as a fully client-side annotation utility designed to facilitate the bookmarking, captioning, and chapter creation processes for video content embedded through the YouTube API Services. This Privacy Policy serves as a comprehensive disclosure of the methodologies, technical architectures, and legal frameworks underpinning data management practices within the platform. It is intended to provide users with a clear understanding of the types of information that may be processed, the manner in which such information is handled, and the structural limitations that define our operational model. Users are advised to review this policy in its entirety, although the depth of detail may warrant consultation with legal or technical experts for interpretive clarity.</p>
+
+                        <h2>2. Legal Compliance Framework</h2>
+                        <p>VideoCC has been constructed to align with an extensive cross-jurisdictional privacy compliance framework. This framework incorporates principles derived from the European Union’s General Data Protection Regulation (GDPR), the California Consumer Privacy Act (CCPA), the United Kingdom’s GDPR adaptation, the ePrivacy Directive (2002/58/EC), and relevant privacy obligations enforced under other applicable national or regional regimes. In circumstances where regulatory obligations diverge or appear to be in conflict, the platform will interpret and apply the highest standard of data protection principles within the context of its client-side operational paradigm. However, enforcement obligations may be geographically constrained by jurisdictional limitations.</p>
+
+                        <h2>3. Data Collection and Handling Architecture</h2>
+                        <p>The data architecture employed by VideoCC is intentionally structured to avoid centralized retention of user-generated content. All annotation data, including bookmarks, timestamps, captions, and associated metadata, resides exclusively within the browser’s Local Storage API environment. These data structures are serialized as UTF-8 encoded JSON strings and keyed under domain-scoped identifiers to maintain separation from unrelated browser contexts. No automated synchronization, remote replication, or server-side backup mechanisms exist, and no session data is transmitted to an external endpoint for storage or indexing.</p>
+                        <p>Session-specific variables, including undo and redo stacks, interface state flags, and ephemeral playback markers, are maintained entirely in volatile JavaScript heap memory during active use. Upon closure of the browser tab or termination of the runtime environment, these buffers are purged through the browser’s garbage collection process. This ensures that transient operational data does not persist beyond the duration of a single editing session.</p>
+                        <p>While VideoCC does not intentionally collect personal information, certain non-personal telemetry may be processed by integrated third-party services for analytics and performance tuning. Such telemetry may include browser version data, viewport dimensions, rendering performance diagnostics, and generalized geolocation approximations at a country level. All such data is anonymized and aggregated prior to any external exposure, ensuring that it cannot reasonably be used to reconstruct individual user profiles or associate behavioral patterns with specific annotation content.</p>
+
+                        <h2>4. Third-Party Service Integrations</h2>
+                        <p>The platform incorporates external service integrations to deliver essential functionality. Chief among these is the YouTube IFrame Player API, which provides embedded playback capabilities, timestamp synchronization, and transport control features. Interaction with the API is limited to the invocation of playback methods, retrieval of current playback positions, and dispatch of seek commands to facilitate accurate annotation workflows. At no point does VideoCC request, capture, or store OAuth tokens, user credentials, watch history, or any other sensitive identifiers from the YouTube ecosystem.</p>
+                        <p>Additionally, VideoCC utilizes Google AdSense to display contextually relevant advertisements. The AdSense network may deploy cookies, web beacons, and pseudonymous device identifiers to deliver targeted advertising experiences based on prior browsing activity. These identifiers are generated and maintained exclusively within the advertising framework and are not linked to annotation datasets or locally stored user project data. The programmatic advertising process may involve real-time bidding (RTB) protocols conducted within Google’s ad exchange infrastructure, but VideoCC does not provide nor does it have access to any information that could identify individual users or their annotation behaviors.</p>
+
+                        <h2>5. Cookies and State Management</h2>
+                        <p>The platform employs a minimal cookie footprint for core functionality, relying primarily on browser-native storage mechanisms such as Local Storage and Session Storage. Local Storage retains user project data and interface preferences, while Session Storage may be utilized for ephemeral interface states such as panel width ratios and temporary input buffers. These storage objects are namespaced to the domain and protected under browser-enforced same-origin policies, preventing cross-site access or unauthorized data injection.</p>
+                        <p>Cookies deployed by third-party advertisers may be used to maintain session continuity and deliver personalized advertisements. Users may configure their browser environments to block or selectively manage cookies, though doing so may impact the relevance or availability of certain advertising features. Such configuration has no effect on core annotation capabilities, which operate independently of cookie-based mechanisms.</p>
+
+                        <h2>6. User Control and Operational Autonomy</h2>
+                        <p>All annotation data created through VideoCC remains under the exclusive custody and control of the user. Users may delete stored data at any time by clearing browser cache and local storage associated with the platform’s domain. This deletion process is irreversible and will result in the permanent loss of all annotations, bookmarks, and subtitles associated with affected video projects.</p>
+                        <p>Because the platform does not maintain centralized user accounts or server-hosted repositories, no mechanism exists for cross-device synchronization, external backup, or remote recovery of lost data. Users are encouraged to periodically export their annotations using the integrated output generation feature to ensure redundant preservation of their work in text or subtitle file formats.</p>
+
+                        <h2>7. Liability Allocation and User Responsibility</h2>
+                        <p>VideoCC functions solely as a facilitation layer for client-side annotation and does not assume responsibility for the nature, legality, or contextual appropriateness of user-generated content. Users are solely accountable for ensuring that their annotations comply with applicable copyright laws, broadcasting regulations, accessibility standards, and privacy statutes. The platform does not implement automated content validation or filtering mechanisms and is not designed to interpret or enforce jurisdiction-specific compliance requirements.</p>
+                        <p>Responsibility for safeguarding locally stored data rests entirely with the user. The platform cannot prevent data loss or exposure resulting from hardware compromise, malware infection, unauthorized local access, or user mismanagement of browser-level security controls. Furthermore, no liability is assumed for the use of generated annotations in contexts where regulatory certification or formalized accessibility compliance is required, such as closed captioning for broadcast television or cinema release.</p>
+
+                        <h2>8. Age-Specific Usage Context</h2>
+                        <p>VideoCC does not incorporate active age verification protocols and does not solicit personally identifiable information that could be used to determine user age. As such, use of the platform by individuals under the age of 13 is implicitly subject to supervisory mechanisms implemented by parents, guardians, or external platforms through which the site may be accessed. Compliance with statutory frameworks such as COPPA remains the responsibility of the user environment, and no operational measures are undertaken by the platform to enforce or monitor such compliance.</p>
+
+                        <h2>9. Data Security and Encryption Framework</h2>
+                        <p>All communication between the platform and the user’s browser is secured via Transport Layer Security (TLS) 1.2 or higher. This encryption ensures that assets including HTML, CSS, and JavaScript files are transmitted securely and cannot be intercepted or modified during transfer. Locally stored data, however, remains unencrypted beyond the protection provided by the browser’s own sandboxing and file system security measures. Given that annotation data never leaves the user’s device, the risk of systemic breach is substantially reduced compared to conventional web services that rely on centralized database architectures.</p>
+                        <p>The platform’s threat surface is further minimized by the absence of authentication APIs, centralized session tracking mechanisms, or personally identifiable data pipelines. Potential vulnerabilities are thus confined to client-side environments, where device-level protections such as antivirus software, disk encryption, and secure login credentials are recommended for maintaining data confidentiality.</p>
+
+                        <h2>10. Policy Amendments and Change Management</h2>
+                        <p>This Privacy Policy may be updated to reflect modifications to platform architecture, third-party integration requirements, or legal compliance obligations. Each update will be documented through a revised publication date displayed prominently at the top of the document. Users are encouraged to review the policy periodically to remain informed of the current operational and legal frameworks governing data handling practices.</p>
+
+                        <h2>11. Governing Law and Jurisdiction</h2>
+                        <p>This Privacy Policy shall be interpreted under the governing laws applicable to the user’s jurisdiction. In cases of conflict, the highest applicable standard of data protection shall prevail. Disputes arising from interpretation of this policy may be subject to jurisdictional limitations and may be resolved through non-litigation channels as determined by applicable law.</p>
+
+                        <h2>12. Extended Legal Provisions</h2>
+                        <p>The enforceability of this Privacy Policy is subject to principles of severability, meaning that if any clause is deemed invalid or unenforceable under applicable law, the remaining provisions shall continue in full force and effect. Additionally, the platform shall not be held liable for delays, interruptions, or failures resulting from circumstances beyond reasonable control, including but not to limited to acts of nature, regulatory mandates, third-party service outages, or unforeseen technical disruptions constituting force majeure.</p>
+
+                        <h2>13. Appendices</h2>
+                        <h3>Appendix A: Technical Storage Schema</h3>
+                        <p>Annotation data is serialized into hierarchical JSON objects, with bookmarks represented as arrays containing discrete timecode markers and description payloads, and subtitle entries structured as nested objects with start and end timestamps and associated text strings. Interface preferences such as panel dimensions and autofill states are encapsulated in separate state objects, each keyed with unique domain-prefixed identifiers to mitigate storage collisions.</p>
+
+                        <h3>Appendix B: Compliance Mapping</h3>
+                        <p>The platform’s privacy posture has been evaluated against multiple regulatory benchmarks. Under GDPR, processing of personal data is effectively non-existent due to the absence of centralized collection, thereby fulfilling principles of data minimization and purpose limitation. Under CCPA, the platform does not engage in practices constituting “data sale” as defined under California law. Under COPPA, operational responsibility for underage user access remains external to the platform by design, as no account creation or active data solicitation occurs.</p>
+
+                        <h3>Appendix C: Incident Response Framework</h3>
+                        <p>Given the absence of centralized data stores, systemic data breaches are effectively precluded. In the event of localized compromise, such as device theft or browser vulnerability exploitation, responsibility for incident response, data purging, and forensic remediation resides with the user or applicable device security providers. No formal incident response channels are maintained by the platform beyond general contact availability for procedural inquiries.</p>
+
+                        <h2>14. Contact and Escalation Pathways</h2>
+                        <p>For compliance inquiries, clarification of policy terms, or procedural questions regarding platform functionality, users may submit correspondence via the integrated Feedback & Contact Us interface. Submissions are processed under strict data minimization principles, ensuring that no personally identifiable information is required or retained beyond the content voluntarily provided by the user for purposes of correspondence.</p>
+
+                        <a href="index.html" class="back-link">← Back to Home</a>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    
+    <footer id="site-footer">© 2025 VideoCC. All rights reserved.</footer>
+    <script src="animations.js"></script>
+    <script src="toc.js" defer></script>
+
+</body>
+</html>

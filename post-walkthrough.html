@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Official VideoCC Walkthrough - VideoCC Blog</title>
+    <meta name="description" content="A complete user guide to every feature on VideoCC. Learn to master your video annotation and captioning workflow from start to finish.">
+    
+    <!-- Reusing the same fonts and stylesheets -->
+    <link rel="icon" href="logo/your-logo-filename.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="floating_nav.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="page_transitions.css">
+    <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="logo/your-logo-filename.png" alt="VideoCC Logo" class="header-logo">
+            <h1 id="logo" class="animating">VideoCC</h1>
+        </div>
+    </header>
+
+    <div id="original-content">
+        <div class="blog-layout-container">
+            <nav id="toc-sidebar" class="toc-sidebar"></nav>
+            <main class="post-container anim-element">
+                <article>
+                    <header class="post-header">
+                        <span class="post-tag">Walkthrough</span>
+                        <h1>From Start to Finish: The Official VideoCC Guide</h1>
+                        <div class="post-meta">
+                            <span>By The VideoCC Team</span> | <span>August 30, 2025</span>
+                        </div>
+                        <img src="logo/post-walk.png" alt="Diagram of workflow" class="post-image">
+                    </header>
+
+                    <div class="post-body">
+                        <p>Welcome to VideoCC. This guide explains every feature on the site in detail and in plain language so that the annotation workflow is predictable and efficient. Humor appears only where it helps — the rest is focused, practical, and descriptive.</p>
+                        
+                        <hr>
+
+                        <h2>Part 1: The Front Page - Your Starting Point</h2>
+                        <p>When the site is opened, the front page has one clear purpose: load a YouTube video and move into the workspace for annotation.</p>
+                        <h3>1.1. Loading a Video</h3>
+                        <ul>
+                            <li><strong>The Input Field</strong>: Paste a YouTube URL into the main text box. The field accepts standard YouTube links (video pages, short links, etc.).</li>
+                            <li><strong>The "Load Video" Button</strong>: Click this button after pasting a link. The site validates the URL and, when valid, transitions directly into the main workspace.</li>
+                        </ul>
+                        <blockquote><strong>Pro-Tip</strong>: Press <code>Enter</code> after pasting the URL instead of clicking the button — the page accepts <code>Enter</code> as a shortcut to load the video.</blockquote>
+
+                        <h3>1.2. Discovering Features</h3>
+                        <ul>
+                            <li><strong>Feature Cards</strong>: Animated cards beneath the input field highlight core features (Resizable Panels, Global Autofill, Dual-Mode Captioning, etc.). Hovering over a card pauses animation so text can be read without distraction.</li>
+                        </ul>
+
+                        <h3>1.3. Site Navigation</h3>
+                        <ul>
+                            <li><strong>Floating Navigation</strong>: Buttons appear on the left and right edges. Hovering expands them into ribbons that lead to pages such as <strong>Blogs & Walkthroughs</strong>, <strong>Privacy Policy</strong>, and <strong>Contact / Feedback</strong>. These controls remain accessible without leaving the front page.</li>
+                        </ul>
+
+                        <hr>
+
+                        <h2>Part 2: The Main Workspace - Where the Magic Happens</h2>
+                        <p>After a video loads, the workspace divides into two main columns: <strong>Player</strong> (left) and <strong>Annotation Panel</strong> (right). Each column focuses on related tasks and avoids overlap.</p>
+
+                        <h3>2.1. The Left Column (Player & Controls)</h3>
+                        <ul>
+                            <li><strong>YouTube Player</strong>: The loaded video is embedded here with standard YouTube controls (play/pause, volume, quality settings, captions if provided by the source).</li>
+                            <li><strong>Speed Controls</strong>: Buttons above the player set playback to <code>0.5x</code>, <code>1x</code>, <code>1.5x</code>, or <code>2x</code>. Use slower speeds for precise timing, faster speeds for scanning.</li>
+                            <li><strong>Seek Controls</strong>: Quick-jump buttons let the user jump <code>2s</code>, <code>5s</code>, or <code>30s</code> backward/forward.</li>
+                            <li><strong>Timestamp Viewer</strong>: A large, live display under the player shows the current playback time. This shown time is the default time recorded when creating a new entry.</li>
+                            <li><strong>Hover-Based Hotkeys</strong>: Hovering the mouse over the player area activates keyboard shortcuts so they do not interfere with typing elsewhere.
+                                <ul>
+                                    <li><code>Spacebar</code>: Play / Pause.</li>
+                                    <li><code>ArrowLeft</code> / <code>ArrowRight</code>: Seek backward / forward (default seeks by 5 seconds).</li>
+                                </ul>
+                            </li>
+                            <li><strong>Selectable Seek Interval</strong>: Clicking any seek button (for example, <code>+30s</code>) highlights it. Once highlighted, arrow keys will use that interval until the button is clicked again to deselect it. This allows quick, consistent seeking using the keyboard.</li>
+                        </ul>
+
+                        <h3>2.2. The Right Column (The Annotation Panel)</h3>
+                        <p>This column is for creating, editing, and organizing entries (bookmarks or subtitles).</p>
+                        <ul>
+                            <li><strong>Mode Switching (Bookmark vs. Subtitle)</strong>:
+                                <ul>
+                                    <li>Click the <strong>"Bookmark ▼"</strong> header to open the mode dropdown.</li>
+                                    <li><strong>Bookmark Mode</strong> (default): Use for single timestamp entries — ideal for YouTube chapters or simple notes.</li>
+                                    <li><strong>Subtitle Mode</strong>: Each entry includes a <strong>start time</strong> and an <strong>end time</strong> and is intended for captions/subtitles.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Anatomy of an Entry</strong>:
+                                <ol>
+                                    <li><strong>Counter</strong> — A sequential number (<code>1.</code>, <code>2.</code>, <code>3.</code>) for quick reference.</li>
+                                    <li><strong>Play Button (▶)</strong> — Jumps the player to the entry's timestamp; in Subtitle mode it plays the segment from start to end.</li>
+                                    <li><strong>Timestamp Field(s)</strong> — Click to edit manually. The app accepts time formats like <code>1:25</code> or <code>1:10:05</code>.</li>
+                                    <li><strong>Description Field</strong> — The main text area for notes or caption text. The field automatically resizes vertically.</li>
+                                    <li><strong>Delete Button (X)</strong> — Removes the entry permanently (unless undone).</li>
+                                </ol>
+                            </li>
+                            <li><strong>Adding an Entry</strong>:
+                                <ul>
+                                    <li><strong>Click the Button</strong>: Press the large <strong>"Add a bookmark"</strong> / <strong>"Add a subtitle"</strong> button.</li>
+                                    <li><strong>Use the Hotkey</strong>: Press the <code>Insert</code> key. This pauses the video and creates a new entry.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Setting Start & End Times (Subtitle Mode)</strong>:
+                                <ul>
+                                    <li>First, select the subtitle entry by clicking anywhere inside it. A selected entry displays a <strong>continuous white glow</strong>.</li>
+                                    <li>With the entry selected, use the <strong>"Start"</strong> and <strong>"End"</strong> buttons to capture the current playback time.</li>
+                                    <li><strong>Important</strong>: To keep an entry selected, the mouse must remain over the annotation panel. Moving the mouse away will automatically deselect the entry after 5 seconds.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Auto-Scroll & Highlighting</strong>: As playback progresses, the app highlights the active entry that corresponds to the current time and scrolls it into view.</li>
+                        </ul>
+                        
+                        <h3>2.3. Advanced Annotation Features</h3>
+                        <ul>
+                            <li><strong>Scoped Undo / Redo</strong>: The workspace has dedicated <strong>Undo</strong> and <strong>Redo</strong> buttons that operate on the list of entries. For text-level undos within a description field, use the browser's native <code>Ctrl+Z</code> / <code>Cmd+Z</code>.</li>
+                            <li><strong>Smart Autofill</strong>: <strong>Local Autofill</strong> (default) suggests phrases from notes in the current video. Enable <strong>Global Autofill</strong> for suggestions from all videos ever edited in the browser.</li>
+                        </ul>
+
+                        <hr>
+
+                        <h2>Part 3: Exporting Your Work</h2>
+                        <p>The Output Section at the bottom converts work into formats ready for use on YouTube or other platforms.</p>
+                        <ol>
+                            <li><strong>Click "Generate"</strong> — The app converts entries into properly formatted output (YouTube chapters text or <code>.srt</code> subtitle content).</li>
+                            <li><strong>Copy to Clipboard</strong> — Use the <strong>Copy</strong> button to copy the generated text.</li>
+                            <li><strong>Save As</strong> — Choose <strong><code>.txt</code></strong> or <strong><code>.srt</code></strong> from the dropdown to download the file locally.</li>
+                        </ol>
+
+                        <hr>
+
+                        <h2>Part 4: General Site Features</h2>
+                        <ul>
+                            <li><strong>Resizable Panels</strong>: Hover the vertical divider between player and annotation panel, click and drag to resize.</li>
+                            <li><strong>Starting Over</strong>: Click the <strong>VideoCC</strong> logo in the top-left to return to the front page.</li>
+                            <li><strong>Auto-Saving</strong>: Annotations are saved automatically to the browser's local storage for each video ID.</li>
+                            <li><strong>Feedback Form</strong>: Use the floating <strong>Feedback & Contact Us</strong> button to send messages.</li>
+                        </ul>
+
+                        <hr>
+                        
+                        <h2>Part 5: Device Recommendations</h2>
+                        <ul>
+                           <li><strong>Desktop or Tablet</strong>: Recommended. Larger screens make it easier to manage two columns and to use keyboard shortcuts.</li>
+                           <li><strong>Phone</strong>: Supported for basic captioning, but the workflow is slower. Use only when necessary.</li>
+                        </ul>
+
+                        <hr>
+
+                        <h2>Quick Workflow — Step-by-Step (efficient method)</h2>
+                        <ol>
+                            <li>Load the YouTube URL (paste + <code>Enter</code>).</li>
+                            <li>Use the player to find the first point of interest.</li>
+                            <li>Press <code>Insert</code> to add bookmarks quickly while scanning. Bookmarks are great for chapter points.</li>
+                            <li>Switch to <strong>Subtitle Mode</strong> for detailed captioning. Click an entry, then use <strong>Start</strong>/<strong>End</strong> to set precise times; edit description text.</li>
+                            <li>Use <strong>Local</strong> or <strong>Global Autofill</strong> to speed typing and keep phrasing consistent.</li>
+                            <li>When satisfied, click <strong>Generate</strong>, then <strong>Copy</strong> or <strong>Save As</strong> <code>.srt</code> / <code>.txt</code>.</li>
+                        </ol>
+
+                        <hr>
+                        
+                        <h2>Keyboard Shortcuts & Controls (summary)</h2>
+                        <ul>
+                            <li><code>Enter</code> — Load video after pasting URL.</li>
+                            <li><code>Insert</code> — Add a bookmark or subtitle at the current timestamp (video auto-pauses).</li>
+                            <li><code>Spacebar</code> — Play / Pause (active when hovering over the player).</li>
+                            <li><code>ArrowLeft</code> / <code>ArrowRight</code> — Seek backward / forward. Default 5s; interval changes if a seek button is highlighted.</li>
+                            <li><code>Ctrl+Z</code> / <code>Cmd+Z</code> — Undo typing inside a description field.</li>
+                            <li>Undo / Redo buttons in the UI — Undo or redo entry-level changes (add/delete).</li>
+                        </ul>
+
+                        <hr>
+
+                        <h2>Best Practices & Tips</h2>
+                        <ul>
+                            <li>Use <strong>bookmarks</strong> to map the structure of long videos first.</li>
+                            <li>When captioning, keep individual subtitle durations reasonable (short phrases).</li>
+                            <li>Toggle <strong>Global Autofill</strong> only when the suggestions are relevant.</li>
+                            <li>Export intermittently. Auto-save protects work, but exported files are the safest backups.</li>
+                            <li>For precise editing, slow playback to <code>0.5x</code> when capturing start/end times for short segments.</li>
+                        </ul>
+
+                        <hr>
+
+                        <h2>Troubleshooting (short)</h2>
+                        <ul>
+                            <li><strong>Video won’t load</strong>: Confirm the URL is a valid YouTube video link; try hitting <code>Enter</code>; check network connectivity.</li>
+                            <li><strong>Hotkeys not working</strong>: Hover over the player area to activate them. Some browser extensions may interfere.</li>
+                            <li><strong>Saved notes not visible</strong>: Ensure the same video is loaded. Clearing browser storage will remove saved notes.</li>
+                            <li><strong>Export problems</strong>: Confirm every subtitle has both start and end times. Regenerate the output.</li>
+                        </ul>
+
+                        <hr>
+
+                        <h2>Final Notes</h2>
+                        <p>This guide aims to make each feature and workflow step clear so that annotation feels deliberate and repeatable. Use the <strong>Feedback</strong> button to report missing small annoyances or to request workflow enhancements — practical suggestions lead to practical improvements.</p>
+
+                        <a href="blog.html" class="back-link">← Back to All Posts</a>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    
+    <footer id="site-footer">© 2025 VideoCC. All rights reserved.</footer>
+    <script src="animations.js"></script>
+    <script src="toc.js" defer></script>
+
+</body>
+</html>
+

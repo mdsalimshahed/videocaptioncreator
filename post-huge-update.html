@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>August 2025 Update: A Polished New Blog, Smarter UI, and Major Bug Fixes - VideoCC</title>
+    <meta name="description" content="A deep dive into the latest VideoCC update, including the new blog, a smarter and more intuitive subtitle playback system, and a host of UI polish and bug fixes.">
+    
+    <link rel="icon" href="logo/your-logo-filename.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="floating_nav.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="logo/your-logo-filename.png" alt="VideoCC Logo" class="header-logo">
+            <h1 id="logo" class="animating" onclick="window.location.href='index.html'">VideoCC</h1>
+        </div>
+    </header>
+
+    <div id="original-content">
+        <div class="blog-layout-container">
+            <nav id="toc-sidebar" class="toc-sidebar"></nav>
+            <main class="post-container anim-element">
+                <article>
+                    <header class="post-header">
+                        <span class="post-tag">Update</span>
+                        <h1>August 2025 Update: A Polished New Blog, Smarter UI, and Major Bug Fixes</h1>
+                        <div class="post-meta">
+                            <span>By The VideoCC Team</span> | <span>August 30, 2025</span>
+                        </div>
+                        <img src="logo/post-huge.png" alt="Untangling chaos into product" class="post-image">
+                    </header>
+
+                    <div class="post-body">
+                        <p>Welcome to our biggest platform update of the year! Over the past few weeks, our focus has been twofold: introducing a brand new way to share insights with our <strong>official blog</strong>, and undertaking a deep dive into the codebase to <strong>polish the user experience</strong> and squash pesky bugs. Here’s a full rundown of everything that’s new.</p>
+
+                        <h2>Introducing the VideoCC Blog</h2>
+                        <p>Our most significant new feature is the very platform you're reading this on! The VideoCC blog will be your go-to source for official walkthroughs, technical deep-dives into bug fixes, and tips on how to boost your content's reach.</p>
+                        <p>To make the reading experience as smooth as possible, we've built it with a few key features:</p>
+                        <ul>
+                            <li><strong>Sticky Header &amp; Fade Effect:</strong> On the main blog page, the "Blogs &amp; Walkthroughs" header now stays locked at the top as you scroll, with a clean fade effect that masks the post previews as they move underneath.</li>
+                            <li><strong>Dynamic Table of Contents (TOC):</strong> For longer articles, a helpful "On this page" sidebar is automatically generated from the article's headings. It tracks your scroll position to highlight where you are and allows you to jump to any section instantly. The list is also internally scrollable for very long articles.</li>
+                            <li><strong>Author and Date Previews:</strong> You can now see who wrote each post and when it was published directly from the main blog page, giving you more context at a glance.</li>
+                        </ul>
+
+                        <h2>A Smarter, More Intuitive User Experience</h2>
+                        <p>We've refined many of the animations and interactive elements across the site to make your workflow feel more fluid and intuitive. The star of the show is the completely overhauled subtitle playback logic.</p>
+
+                        <h3>The New Subtitle Playback Logic</h3>
+                        <p>We received feedback that the subtitle playback feature was not as intuitive as it could be. We've re-engineered it from the ground up to be smarter and more predictable.</p>
+                        <ol>
+                            <li><strong>First Click (Seek):</strong> If the video is not at the subtitle's start time, the first click of the play button will now seek directly to that start time and pause. Crucially, the timestamp viewer is instantly updated to match, giving you immediate confirmation of where you are.</li>
+                            <li><strong>Second Click (Play):</strong> With the video now positioned at the start time, a second click will play the video and automatically pause it precisely at the subtitle's end time. The timestamp viewer will then update to show the end time.</li>
+                            <li><strong>Manual Seeking:</strong> We built a new universal seek detection system. If you are paused at a subtitle's start or end time and decide to manually seek through the video (by dragging the progress bar, clicking, or using keyboard shortcuts), the timestamp viewer will immediately "unlock" and resume showing the live video position. This ensures you are never looking at a static time while actively seeking.</li>
+                        </ol>
+                        
+                        <h3>Animation and Interface Polish</h3>
+                        <ul>
+                            <li><strong>Scroll-Triggered Animations:</strong> Blog posts and other elements now slide gracefully into view as you scroll down the page, creating a more engaging experience.</li>
+                            <li><strong>Staggered Animations:</strong> The new Table of Contents sidebar doesn't just appear—its elements slide in one by one in a subtle, staggered animation.</li>
+                            <li><strong>Independent Feature Cards:</strong> The feature cards on the landing page now cycle continuously in a seamless loop, no longer influenced by mouse movements or window resizing.</li>
+                        </ul>
+
+                        <h2>The Bug Squashing Campaign</h2>
+                        <p>A huge part of this update was dedicated to improving stability and fixing jarring behaviors. We listened to feedback and tackled some of the most critical issues:</p>
+                        <ul>
+                            <li><strong>Table of Contents Perfected:</strong> We fixed a series of bugs in the new TOC sidebar.
+                                <ul>
+                                    <li>A bug preventing scrolling on pages with numbered headings (like the Privacy Policy) has been resolved by adding a prefix to the generated section IDs.</li>
+                                    <li>An issue where the last heading in an article would never get highlighted has been fixed with a listener that detects when you've scrolled to the bottom of the page.</li>
+                                    <li>The active TOC link will now automatically scroll into view within the sidebar if the list is long.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Feature Card Lifecycle Fixed:</strong> We addressed several bugs related to the feature cards on the landing page. We fixed the jarring "flash" that occurred when they loaded and resolved issues where they would fail to reappear or would flash and disappear when navigating back to the home page from the workspace.</li>
+                            <li><strong>Layout and Stability:</strong> We've adjusted the layout of the blog post pages to reduce excessive "dead space" on the right, making for a better reading experience on wider screens. We also fixed a critical typo that was breaking the page structure on the Privacy Policy page and preventing scripts from running correctly.</li>
+                        </ul>
+
+                        <p>We're incredibly excited about this update and believe it makes VideoCC a more powerful and pleasant tool to use. As always, thank you for your continued support and feedback!</p>
+
+                        <a href="blog.html" class="back-link">← Back to All Posts</a>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    
+    <footer id="site-footer">© 2025 VideoCC. All rights reserved.</footer>
+    <script src="animations.js"></script>
+    <script src="toc.js" defer></script>
+
+</body>
+</html>
+

@@ -19,20 +19,21 @@
     <link rel="stylesheet" href="slider_controls.css">
     <link rel="stylesheet" href="autofill_toggle.css">
     <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="page_transitions.css"> <!-- Add this line -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7990160105322809" crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-7990160105322809">
 </head>
-<body>
+<body class="preload-hidden">
     <div id="landing-page-links">
     <div class="floating-nav floating-nav-left">
-        <a href="#" class="nav-button">
+        <a href="blog.html" class="nav-button">
             <div class="nav-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" /></svg>
             </div>
             <span class="nav-ribbon">Blogs & Walkthroughs</span>
             <span class="nav-speech-bubble">Blogs & Walkthroughs</span>
         </a>
-        <a href="#" class="nav-button">
+        <a href="privacy.html" class="nav-button">
             <div class="nav-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z" /></svg>
             </div>
@@ -41,7 +42,7 @@
         </a>
     </div>
     <div class="floating-nav floating-nav-right">
-        <a href="#" class="nav-button">
+        <a href="about.html" class="nav-button">
             <div class="nav-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>
             </div>
@@ -56,7 +57,8 @@
             <span class="nav-speech-bubble">Feedback & Contact Us</span>
         </a>
     </div>
-</div>
+    
+    </div>
 
     <div id="original-content">
         <header class="site-header">
@@ -84,7 +86,7 @@
         </div>
         
         <main id="main-content" class="hidden">
-            <button id="start-over-btn" class="hidden">Start Over</button>
+            <!-- <button id="start-over-btn" class="hidden">Start Over</button> -->
             <div id="workspace">
                 <div class="left-column">
                     <div id="speed-controls">
@@ -186,7 +188,7 @@
         </div>
     </div>
 
-    <script src="feature_cards.js"></script>
+    <script src="feature_cards.js" defer></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="ui.js"></script>
     <script src="state.js"></script>
@@ -194,14 +196,16 @@
     <script src="bookmarks.js"></script>
     <script src="output.js"></script>
     <script src="text_undo_redo.js"></script>
-    <script src="app.js"></script>
+    <script src="animations.js" defer></script>
+    <script src="app.js" defer></script>
     <script src="selectable_seek.js"></script>
     <script src="slider_controls.js"></script>
     <script src="autofill_toggle.js"></script>
     <script src="resizer.js"></script>
     <script src="player_hotkeys.js"></script>
     <script src="feedback.js"></script>
-    <script src="animations.js"></script>
+    
+
     
     <footer id="site-footer">© 2025 VideoCC. All rights reserved.</footer>
 

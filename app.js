@@ -29,6 +29,8 @@ const app = {
     selectedSeekInterval: null,
     featureMouseLeaveTimeout: null,
     isGlobalAutofillEnabled: false,
+    lastPlayerTime: 0, // ADD THIS LINE
+
 
     // --- DOM ELEMENT REFERENCES ---
     initDOMElements() {
@@ -105,6 +107,8 @@ const app = {
             e.stopPropagation();
             this.saveAsDropdown.classList.toggle('visible');
         });
+
+
         this.saveAsDropdown.addEventListener('click', this.handleSaveAs.bind(this));
         window.addEventListener('click', () => {
             if (this.saveAsDropdown.classList.contains('visible')) {
@@ -337,35 +341,89 @@ const app = {
         }
     },
 
+    // playSubtitleSegment(index) {
+    //     if (this.subtitlePlaybackId) {
+    //         cancelAnimationFrame(this.subtitlePlaybackId);
+    //         this.subtitlePlaybackId = null;
+    //     }
+
+    //     const subtitle = this.bookmarks[2][index];
+    //     if (!subtitle) return;
+
+    //     const startTime = this.parseSrtTime(subtitle.startTime);
+    //     const endTime = this.parseSrtTime(subtitle.endTime);
+
+    //     this.player.seekTo(startTime, true);
+    //     this.player.playVideo();
+
+    //     const monitorPlayback = () => {
+    //         if (this.player && typeof this.player.getCurrentTime === 'function' && this.player.getCurrentTime() >= endTime) {
+    //             this.player.pauseVideo();
+    //             this.currentTimeDisplay.textContent = subtitle.endTime;
+    //             this.isViewerLocked = true;
+    //             this.subtitlePlaybackId = null;
+    //         } else {
+    //             this.subtitlePlaybackId = requestAnimationFrame(monitorPlayback);
+    //         }
+    //     };
+    //     this.subtitlePlaybackId = requestAnimationFrame(monitorPlayback);
+    // },
+
+
+
+    // --- UI & EVENT HANDLERS ---
+    // --- START of replacement for playSubtitleSegment ---
+
     playSubtitleSegment(index) {
+    // Stop any previously running playback monitor
         if (this.subtitlePlaybackId) {
             cancelAnimationFrame(this.subtitlePlaybackId);
             this.subtitlePlaybackId = null;
         }
 
         const subtitle = this.bookmarks[2][index];
-        if (!subtitle) return;
+        if (!subtitle || !this.player) return;
 
         const startTime = this.parseSrtTime(subtitle.startTime);
         const endTime = this.parseSrtTime(subtitle.endTime);
+        const currentTime = this.player.getCurrentTime();
+        const tolerance = 0.1; // Seconds of tolerance to consider "at the start position"
 
-        this.player.seekTo(startTime, true);
-        this.player.playVideo();
+        // Case 1: Video is already at (or very near) the start position.
+        if (Math.abs(currentTime - startTime) < tolerance) {
+            this.player.playVideo();
 
-        const monitorPlayback = () => {
-            if (this.player && typeof this.player.getCurrentTime === 'function' && this.player.getCurrentTime() >= endTime) {
+            const monitorPlayback = () => {
+                // Check if the video is still playing and has passed the end time
+                if (this.player && typeof this.player.getCurrentTime === 'function' && this.player.getCurrentTime() >= endTime) {
+                    this.player.pauseVideo();
+                    // After pausing, reset the viewer to the END time
+                    this.currentTimeDisplay.textContent = subtitle.endTime;
+                    this.isViewerLocked = true;
+                    this.subtitlePlaybackId = null; // End the loop
+                } else {
+                    // Continue monitoring on the next frame
+                    this.subtitlePlaybackId = requestAnimationFrame(monitorPlayback);
+                }
+            };
+            this.subtitlePlaybackId = requestAnimationFrame(monitorPlayback);
+
+        // Case 2: Video is NOT at the start position.
+        } else {
+            this.player.seekTo(startTime, true);
+            // Ensure video is paused after seeking, as per requirements
+            if (this.player.getPlayerState() !== YT.PlayerState.PAUSED) {
                 this.player.pauseVideo();
-                this.currentTimeDisplay.textContent = subtitle.endTime;
-                this.isViewerLocked = true;
-                this.subtitlePlaybackId = null;
-            } else {
-                this.subtitlePlaybackId = requestAnimationFrame(monitorPlayback);
             }
-        };
-        this.subtitlePlaybackId = requestAnimationFrame(monitorPlayback);
+            // Override the viewer to show the start time and lock it
+            this.currentTimeDisplay.textContent = subtitle.startTime;
+            this.isViewerLocked = true;
+        }
     },
 
-    // --- UI & EVENT HANDLERS ---
+// --- END of replacement for playSubtitleSegment ---
+    
+    
     handleBookmarkListClick(e) {
         const target = e.target;
         const bookmarkItem = target.closest('.bookmark-item');
@@ -376,7 +434,9 @@ const app = {
 
         if (target.closest('.seek-btn')) {
             if (this.activeBookmarkPanel == 1) this.playBookmarkSegment(index);
-            else this.playSubtitleSegment(index);
+            else {
+                this.playSubtitleSegment(index)
+            };
             return; 
         }
         
@@ -895,10 +955,67 @@ const app = {
     },
 
     // --- TIMESTAMP SYNCING & POLLING ---
+    // syncTimestamp() {
+    //     if (this.isViewerLocked || !this.player || typeof this.player.getCurrentTime !== 'function') return;
+
+    //     const currentTime = this.player.getCurrentTime();
+    //     this.currentTimeDisplay.textContent = this.activeBookmarkPanel == 1 ? this.formatTime(currentTime) : this.formatTimeForViewer(currentTime);
+
+    //     let activeIndex = -1;
+    //     const currentList = this.bookmarks[this.activeBookmarkPanel];
+        
+    //     for (let i = currentList.length - 1; i >= 0; i--) {
+    //         const itemTime = (this.activeBookmarkPanel == 1) ? currentList[i].time : this.parseSrtTime(currentList[i].startTime);
+    //         const comparisonTime = (this.activeBookmarkPanel == 1) ? Math.floor(currentTime) : currentTime;
+
+    //         if (comparisonTime >= itemTime) {
+    //             activeIndex = i;
+    //             break;
+    //         }
+    //     }
+
+    //     document.querySelectorAll('.bookmark-item').forEach((item, index) => {
+    //         if (index === activeIndex) {
+    //             if (!item.classList.contains('active-bookmark')) {
+    //                 item.classList.add('active-bookmark');
+    //                 if (!this.isHoveringBookmarks) {
+    //                     const container = this.bookmarksListContainer;
+    //                     // Center the item within the container
+    //                     const scrollPosition = item.offsetTop - container.offsetTop - (container.clientHeight / 2) + (item.clientHeight / 2);
+    //                     container.scrollTo({
+    //                         top: scrollPosition,
+    //                         behavior: 'smooth'
+    //                     });
+    //                 }
+    //             }
+    //         } else {
+    //             item.classList.remove('active-bookmark');
+    //         }
+    //     });
+    // },
+
+    // --- START of replacement for syncTimestamp ---
+
     syncTimestamp() {
-        if (this.isViewerLocked || !this.player || typeof this.player.getCurrentTime !== 'function') return;
+        if (!this.player || typeof this.player.getCurrentTime !== 'function') return;
 
         const currentTime = this.player.getCurrentTime();
+
+        // Universal manual seek detection: if the player is paused and the time
+        // jumps significantly, it means the user sought manually by any means.
+        if (this.player.getPlayerState() === YT.PlayerState.PAUSED) {
+            const timeDiff = Math.abs(currentTime - this.lastPlayerTime);
+            // A jump greater than 1 second while paused is a reliable indicator of a manual seek.
+            if (timeDiff > 1) {
+                this.isViewerLocked = false;
+            }
+        }
+        this.lastPlayerTime = currentTime; // Always update for the next check.
+
+        // If the viewer is locked (e.g., after a subtitle playback), do not update it.
+        if (this.isViewerLocked) return;
+
+        // If not locked, proceed with the normal live update.
         this.currentTimeDisplay.textContent = this.activeBookmarkPanel == 1 ? this.formatTime(currentTime) : this.formatTimeForViewer(currentTime);
 
         let activeIndex = -1;
@@ -920,7 +1037,6 @@ const app = {
                     item.classList.add('active-bookmark');
                     if (!this.isHoveringBookmarks) {
                         const container = this.bookmarksListContainer;
-                        // Center the item within the container
                         const scrollPosition = item.offsetTop - container.offsetTop - (container.clientHeight / 2) + (item.clientHeight / 2);
                         container.scrollTo({
                             top: scrollPosition,
@@ -933,6 +1049,9 @@ const app = {
             }
         });
     },
+
+// --- END of replacement for syncTimestamp ---
+
 
     startTimestampLoop() {
         if (this.timestampAnimationId === null) {
@@ -1093,6 +1212,10 @@ const app = {
 
         // if (window.animations && typeof window.animations.runLandingPageIntroAnimation === 'function') {
         window.animations.runLandingPageIntroAnimation();
+        this.featuresGrid.style.animation = ''; 
+
+        this.startFeatureCycle(); // <-- ADD THIS LINE
+
         // }
     },
 
