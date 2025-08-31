@@ -1,7 +1,6 @@
-
 # VideoCC - Free YouTube Timestamp & Chapter Generator
 
-**Live Webpage**: [**videocaptioncreator.pages.dev**](https://videocaptioncreator.pages.dev)
+**Live Webpage**: **[videocaptioncreator.pages.dev](https://videocaptioncreator.pages.dev/)**
 
 Welcome to **VideoCC**, a powerful, single-page web application designed to make creating timestamps, chapters, and subtitles for YouTube videos effortless. Built with a sleek, modern interface, it provides content creators, students, and researchers with the tools they need to quickly annotate and navigate video content without leaving the browser.
 
@@ -99,26 +98,49 @@ This tool is packed with features designed for efficiency and a great user exper
 
 ## 📂 File Structure
 
-The project is organized into modular files for clarity and ease of maintenance:
+The project is organized with a focus on modularity and separation of concerns:
 
 ```
 .
+├── .vscode/
+│   └── settings.json
 ├── logo/
+│   ├── about-us.jpg
+│   ├── post-autofill-fix.jpg
+│   ├── post-huge.jpg
+│   ├── post-seo.jpg
+│   ├── post-walk.jpg
+│   ├── your-logo-filename.jpg
 │   └── your-logo-filename.png
-├── index.html              # Main HTML structure
-├── style.css               # Core desktop styles
-├── config.js               # Configuration for landing page feature cards
-├── app.js                  # Main application object and initialization
-├── ui.js                   # DOM element management and UI helper functions
-├── state.js                # State management (saving, loading, undo/redo)
-├── player.js               # YouTube player logic and time formatting
-├── bookmarks.js            # Bookmark/subtitle creation and management
-├── output.js               # Logic for generating and exporting text
-├── text_undo_redo.js       # Scoped undo/redo for text fields
-├── resizer.js              # Logic for the resizable panel divider
-├── resizer.css             # Styles for the resizer
-├── player_hotkeys.js       # Arrow key seeking functionality
-├── selectable_seek.js      # Logic for selectable seek buttons
-├── selectable_seek.css     # Styles for selected seek buttons
-└── mobile_ux.css           # All styles for the responsive mobile layout
+├── index.html                  # Main application page
+├── about.html                  # About page
+├── blog.html                   # Blog index page
+├── privacy.html                # Privacy policy
+├── post-autofill-fix.html      # Blog post
+├── post-huge-update.html       # Blog post
+├── post-seo-bookmarks.html     # Blog post
+├── post-walkthrough.html       # Blog post
+├── style.css                   # Core application styles
+├── animations.css              # Animation keyframes and classes
+├── autofill_toggle.css         # Styles for the autofill toggle switch
+├── blog.css                    # Styles specific to the blog pages
+├── floating_nav.css            # Styles for the floating navigation buttons
+├── mobile_ux.css               # Responsive styles for mobile devices
+├── resizer.css                 # Styles for the resizable panel divider
+├── selectable_seek.css         # Styles for the selectable seek buttons
+├── slider_controls.css         # Styles for the slider controls
+├── app.js                      # Main application logic
+├── animations.js               # Handles all animations and page transitions
+├── autofill_toggle.js          # Logic for the autofill toggle switch
+├── feature_cards.js            # Defines the feature cards on the landing page
+├── feedback.js                 # Handles the feedback form submission
+├── player_hotkeys.js           # Implements keyboard shortcuts for the video player
+├── resizer.js                  # Logic for the resizable panel divider
+├── selectable_seek.js          # Logic for the selectable seek buttons
+├── slider_controls.js          # Logic for the slider controls
+├── text_undo_redo.js           # Manages undo/redo for text input fields
+├── toc.js                      # Generates the table of contents for blog posts
+├── ads.txt                     # Google Adsense configuration
+└── README.md                   # This file
+
 ```
