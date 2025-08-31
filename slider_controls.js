@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const seekValues = [
-        { text: '2s', value: 2 },
+        { text: '1s', value: 1 },
         { text: '5s', value: 5 },
         { text: '10s', value: 10 },
         { text: '30s', value: 30 }
