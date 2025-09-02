@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Making Hotkeys Smarter: A Fix for Selectable Seek - VideoCC Blog</title>
+    <meta name="description" content="We've fixed a bug where arrow key hotkeys ignored the selected seek interval. Learn about the fix and how it improves your workflow.">
+    
+    <link rel="icon" href="logo/your-logo-filename.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="floating_nav.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="logo/your-logo-filename.png" alt="VideoCC Logo" class="header-logo">
+            <h1 id="logo" class="animating" onclick="window.location.href='index.html'">VideoCC</h1>
+        </div>
+    </header>
+
+    <div id="original-content">
+        <div class="blog-layout-container">
+            <nav id="toc-sidebar" class="toc-sidebar"></nav>
+            <main class="post-container anim-element">
+                <article>
+                    <header class="post-header">
+                        <span class="post-tag">Bug Fix</span>
+                        <h1>Making Hotkeys Smarter: A Fix for Selectable Seek</h1>
+                    <div class="post-meta">
+                        <span>By The VideoCC Team</span> | <span>September 2, 2025</span>
+                    </div>
+                    <img src="logo/post-seek-update.jpg" alt="Image of a roadmap with the seek options" class="post-image">
+                </header>
+
+                <div class="post-body">
+                    <p>One of the most powerful workflow features in VideoCC is the ability to customize your keyboard shortcuts. The <strong>Selectable Seek Interval</strong> was designed to let you choose your preferred jump distance—be it 1, 5, or 30 seconds—and use the arrow keys for rapid, consistent navigation. However, a subtle bug was preventing this feature from working as intended.</p>
+                    
+                    <h2>The Problem: An Unexpected Reset</h2>
+                    <p>We received feedback that after selecting a specific seek interval (like ±1s or ±30s), using the left and right arrow keys would sometimes revert to the default 5-second jump. The system wasn't consistently remembering the user's choice, which led to a frustrating and unpredictable experience. Instead of speeding up the workflow, it caused interruptions.</p>
+                    
+                    <h2>The Solution: Prioritizing Your Selection</h2>
+                    <p>We've rolled out an update that fixes this behavior. We adjusted the tool to ensure that it always prioritizes your selection. Now, whatever interval you've selected with a click will remain the active interval for the arrow keys until you decide to change it or deselect it.</p>
+                    
+                    <h2>The Result: A More Reliable Workflow</h2>
+                    <p>With this fix, the Selectable Seek Interval feature now works exactly as described in our official walkthrough. Your chosen seek interval will persist, allowing you to navigate with the precision and speed you expect. This makes for a more fluid, reliable, and efficient captioning process.</p>
+                    <p>Thank you to our users for reporting this issue. Your feedback is crucial for helping us build a better tool for everyone. Happy captioning!</p>
+
+                    <a href="blog.html" class="back-link">← Back to All Posts</a>
+                </div>
+            </article>
+        </main>
+    </div>
+    
+    <footer id="site-footer">© 2025 VideoCC. All rights reserved.</footer>
+    <script src="animations.js"></script>
+    <script src="toc.js" defer></script>
+
+</body>
+</html>

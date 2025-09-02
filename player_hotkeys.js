@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Determine the seek interval
             const DEFAULT_SEEK_INTERVAL = 5;
             let seekInterval = app.selectedSeekInterval ? Math.abs(app.selectedSeekInterval) : DEFAULT_SEEK_INTERVAL;
-            
+            if (app.selectedSeekInterval !== null && app.selectedSeekInterval !== undefined) {
+                seekInterval = Math.abs(app.selectedSeekInterval);
+            }
             let seekDirection = 0;
 
             if (e.key === 'ArrowLeft') {
