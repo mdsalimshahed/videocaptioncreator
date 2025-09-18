@@ -14,7 +14,7 @@ This tool is packed with features designed for efficiency and a great user exper
     
 -   **Variable Playback Speed**: Watch videos at `0.5x`, `1x`, `1.5x`, or `2x` speed to match your note-taking pace.
     
--   **Precise Seeking**: Jump forward or backward with fine-grained controls (`±2s`, `±5s`, `±30s`).
+-   **Precise Seeking**: Jump forward or backward with fine-grained controls (`±1s`, `±5s`, `±30s`).
     
 -   **Hover-to-Control Hotkeys**:
     
@@ -106,8 +106,10 @@ The project is organized with a focus on modularity and separation of concerns:
 │   └── settings.json
 ├── logo/
 │   ├── about-us.jpg
+│   ├── post-1-second-seek.jpg
 │   ├── post-autofill-fix.jpg
 │   ├── post-huge.jpg
+│   ├── post-seek-update.jpg
 │   ├── post-seo.jpg
 │   ├── post-walk.jpg
 │   ├── your-logo-filename.jpg
@@ -118,7 +120,9 @@ The project is organized with a focus on modularity and separation of concerns:
 ├── privacy.html                # Privacy policy
 ├── post-autofill-fix.html      # Blog post
 ├── post-huge-update.html       # Blog post
+├── post-seek-hotkey-fix.html   # Blog post (New)
 ├── post-seo-bookmarks.html     # Blog post
+├── post-seek-update.html       # Blog post
 ├── post-walkthrough.html       # Blog post
 ├── style.css                   # Core application styles
 ├── animations.css              # Animation keyframes and classes
