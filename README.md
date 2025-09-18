@@ -1,6 +1,7 @@
+
 # VideoCC - Free YouTube Timestamp & Chapter Generator
 
-**Live Webpage**: **[videocaptioncreator.pages.dev](https://videocaptioncreator.pages.dev/)**
+**Live Webpage**: [**videocaptioncreator.pages.dev**](https://videocaptioncreator.pages.dev/ "null")
 
 Welcome to **VideoCC**, a powerful, single-page web application designed to make creating timestamps, chapters, and subtitles for YouTube videos effortless. Built with a sleek, modern interface, it provides content creators, students, and researchers with the tools they need to quickly annotate and navigate video content without leaving the browser.
 
@@ -85,6 +86,10 @@ This tool is packed with features designed for efficiency and a great user exper
 6.  **Generate & Export**: Once you're finished, scroll down to the "Generate" section. Click the "Generate" button to format your notes, then either "Copy" or "Save As" to export your work.
     
 
+## ❤️ Supporting VideoCC
+
+VideoCC is a free tool, and we want to keep it that way. To help cover hosting costs and support future development, we have integrated unobtrusive ads via Google AdSense. This allows us to continue improving the app and adding new features without ever charging for them. Thank you for your support!
+
 ## 🛠️ Technical Stack
 
 -   **HTML5**: Semantic and accessible structure.
@@ -94,6 +99,8 @@ This tool is packed with features designed for efficiency and a great user exper
 -   **JavaScript (ES6+)**: All application logic is handled with vanilla JavaScript, organized into modular, independent files for maintainability.
     
 -   **YouTube IFrame Player API**: For embedding and controlling the YouTube video player.
+    
+-   **Google AdSense**: For monetization to support the project.
     
 
 ## 📂 File Structure
@@ -107,6 +114,7 @@ The project is organized with a focus on modularity and separation of concerns:
 ├── logo/
 │   ├── about-us.jpg
 │   ├── post-1-second-seek.jpg
+│   ├── post-ads-support.jpg  # New
 │   ├── post-autofill-fix.jpg
 │   ├── post-huge.jpg
 │   ├── post-seek-update.jpg
@@ -118,9 +126,10 @@ The project is organized with a focus on modularity and separation of concerns:
 ├── about.html                  # About page
 ├── blog.html                   # Blog index page
 ├── privacy.html                # Privacy policy
+├── post-ads-support.html       # Blog post (New)
 ├── post-autofill-fix.html      # Blog post
 ├── post-huge-update.html       # Blog post
-├── post-seek-hotkey-fix.html   # Blog post (New)
+├── post-seek-hotkey-fix.html   # Blog post
 ├── post-seo-bookmarks.html     # Blog post
 ├── post-seek-update.html       # Blog post
 ├── post-walkthrough.html       # Blog post
@@ -146,5 +155,4 @@ The project is organized with a focus on modularity and separation of concerns:
 ├── toc.js                      # Generates the table of contents for blog posts
 ├── ads.txt                     # Google Adsense configuration
 └── README.md                   # This file
-
 ```
