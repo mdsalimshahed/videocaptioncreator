@@ -158,8 +158,6 @@ const app = {
                 this.logo.classList.remove('animating');
                 this.landingPage.classList.add('hidden');
                 this.mainContent.classList.remove('hidden');
-                (adsbygoogle = window.adsbygoogle || []).push({}); // <-- ADD THIS LINE
-
 
                 if (window.animations && typeof window.animations.runWorkspaceIntroAnimation === 'function') {
                     window.animations.runWorkspaceIntroAnimation();
@@ -170,7 +168,6 @@ const app = {
             this.logo.classList.remove('animating');
             this.landingPage.classList.add('hidden');
             this.mainContent.classList.remove('hidden');
-            (adsbygoogle = window.adsbygoogle || []).push({});
             setupPlayer();
         }
     },
