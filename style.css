@@ -878,3 +878,13 @@ button:disabled {
     font-size: 0.8em;
 }
 
+/* --- STYLES FOR AD CONTAINER --- */
+
+.ad-container {
+    width: 100%;
+    margin-top: 40px; /* Adds space above the ad */
+    margin-bottom: 20px; /* Adds space below the ad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
